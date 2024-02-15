@@ -3,16 +3,28 @@
  
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.google.com/specimen/Source+Serif+4">
     <style>
         body {
             font-family: 'Source Serif 4', serif;
             font-size: 16px;
         }
+        @media screen and (max-width:632px) {
+            body {
+                font-family: 'Source Serif 4', serif;
+                font-size: 11px;
+            }
+        }
 
         p {
             font-family: 'Source Serif 4', serif;
             font-size: 16px;
+        }
+        @media screen and (max-width:632px) {
+            p {
+                font-size: 11px;
+            }
         }
 
         h1 {
@@ -21,12 +33,22 @@
             margin-bottom: 0px;
             font-size: 36px;
         }
+        @media screen and (max-width:632px) {
+            h1 {
+                font-size: 22px;
+            }
+        }
 
         h3 {
             font-family: serif;
             margin-top: 30px;
             margin-bottom: 25px;
             font-size: 20px;
+        }
+        @media screen and (max-width:632px) {
+            h3 {
+                font-size: 13px;
+            }
         }
 
         h4 {
@@ -36,21 +58,37 @@
             margin-bottom: 10px;
             font-size: 18px;
         }
+        @media screen and (max-width:632px) {
+            h4 {
+                font-size: 12px;
+            }
+        }
 
         .container {
             text-shadow: 10px 10px 10px #000000;
             color: rgb(0, 0, 0);
             padding-bottom: 50px;
             margin: 0 auto;
-            width: 70%;
+            width: 65%;
             font-family: serif;
             font-size: 16px;
+        }
+        @media screen and (max-width:632px) {
+            .container {
+                width: 100%;
+                font-size: 11px;
+            }
         }
 
         .box {
             padding: 15px;
             margin-bottom: 10px;
             font-size: 16px;
+        }
+        @media screen and (max-width:632px) {
+            .box {
+                font-size: 11px;
+            }
         }
 
         .beige {
