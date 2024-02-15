@@ -39,7 +39,7 @@ class Newsletter:
         captions = [self.data_df[f"Caption {i}"].to_list() for i in range(1, 4)]
 
         self.email_data = {
-            "subject": "Weekly Newsletter",
+            "subject": "Monthly Newsletter",
             "question_title": self.data_df.columns[2],
             "question_answers": [(name, answer) for name, answer in zip(names, question) if answer != ''],
             "one_good_thing": [(name, ogt) for ogt, name in zip(one_good_thing, names) if ogt != ''],
@@ -68,14 +68,14 @@ if __name__ == "__main__":
 
     # parameters
     first_edition_date = '2024/02/15'
-    frequency = 1 # no. days between newsletters
+    frequency = 7 # no. days between newsletters
     timezone = "Pacific/Auckland"
 
     load_dotenv()
     sender = os.getenv("GMAIL_ADDRESS")
     recipients = ast.literal_eval(os.getenv("RECIPIENT"))
     print(recipients)
-    password = os.getenv("GMAIL_PASSWORD")
+    password = os.getenv("APP_PASSWORD")
     sheet_id = os.getenv("SHEET_ID")
     sheet_name = os.getenv("SHEET_NAME")
     

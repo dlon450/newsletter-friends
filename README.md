@@ -7,11 +7,11 @@ A Gmail account and app password is required for emails to be sent (see [here](h
 When using this repo locally, you will need to set up a .env file containing email addresses, passwords, and the Google Spreadsheet corresponding to the Google Form. It should look something like this:
 
 ```
-GMAIL_ADDRESS=xxx@gmail.com
-GMAIL_PASSWORD=xxxxxxxxxxxx
-RECIPIENT=["xxx@gmail.com", "yyy@gmail.com", ...]
-SHEET_ID=xxxxxxxxxxxx
-SHEET_NAME="xxx"
+GMAIL_ADDRESS=sender@gmail.com
+APP_PASSWORD=xxxxxxxxxxxxxxxx
+RECIPIENT=["recipient1@gmail.com", "recipient2@gmail.com", ...]
+SHEET_ID=xxxxxxxxxxxxxxxx
+SHEET_NAME="xxxxxxxxxxxxxxxx"
 ```
 
 Then, run ``main.py``. Otherwise, if using this repo with GitHub Actions, you will need to add these hidden variables as secrets (Settings > Secrets and Variables > Actions > New repository secret).
