@@ -19,7 +19,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install python-dotenv
           python -m pip install pandas
-          python -m pip install smtplib
           python -m pip install Jinja2
       - name: Send newsletter to friends
         env:
