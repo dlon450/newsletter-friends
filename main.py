@@ -45,8 +45,8 @@ class Newsletter:
             "one_good_thing": [(name, ogt) for ogt, name in zip(one_good_thing, names) if ogt != ''],
             "images": [(images[i][j].replace('open?', 'uc?export=view&'), names[j], captions[i][j]) for j in range(len(names)) for i in range(len(images)) if images[i][j] != ''],
             "date": self.datetime_now,
-            "next_date": self.datetime_now + timedelta(days=7),
-            "edition_number": (datetime.now() - datetime.strptime(first_edition_date, "%Y/%m/%d")).seconds // (86400 * 7) + 1
+            "next_date": self.datetime_now + timedelta(days=self.frequency),
+            "edition_number": (datetime.now() - datetime.strptime(first_edition_date, "%Y/%m/%d")).seconds // (86400 * self.frequency) + 1
         }
         self.email_content = template.render(self.email_data)
 
@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     # parameters
     first_edition_date = '2024/02/15'
-    frequency = 7 # no. days between newsletters
+    frequency = 1 # no. days between newsletters
     timezone = "Pacific/Auckland"
 
     load_dotenv()
