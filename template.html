@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.google.com/specimen/Source+Serif+4">
+    <style>
+        body {
+            font-family: 'Source Serif 4', serif;
+            font-size: 16px;
+        }
+
+        p {
+            font-family: 'Source Serif 4', serif;
+            font-size: 16px;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: serif;
+            margin-bottom: 0px;
+            font-size: 36px;
+        }
+
+        h3 {
+            font-family: serif;
+            margin-top: 30px;
+            margin-bottom: 25px;
+            font-size: 20px;
+        }
+
+        h4 {
+            text-align: center;
+            font-family: serif;
+            margin-top: 0px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .container {
+            text-shadow: 10px 10px 10px #000000;
+            /* background: linear-gradient(to right, #00000088, #ffffff1d); */
+            color: rgb(0, 0, 0);
+            /* padding-top: 50px; */
+            padding-bottom: 50px;
+            padding-left: 150px;
+            padding-right: 150px;
+            font-family: serif;
+            font-size: 16px;
+        }
+
+        .box {
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .beige {
+            background: #faf5f1;
+        }
+
+        .text-name {
+            color: #133f63;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+ 
+<body>
+    <div class="container">
+        <header>
+            <h1>Chatime Newsletter</h1>
+            <h4>No. {{ edition_number }} | {{ date.strftime("%A, %B %d") }}</h3>
+            <!-- <h1>{{ subject }}</h1> -->
+        </header>
+
+        <hr>
+
+        <main>
+            
+            <h3>{{ question_title }}</h3>
+            {% for answer in question_answers %}
+                <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
+            {% endfor %}
+
+            <h3>Photo Wall</h3>
+            {% for picture in images %}
+                <img src="{{ picture[0] }}" alt="{{ picture[1] + picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
+            {% endfor %}
+
+            <h3>One Good Thing </h3>
+            {% for ogt in one_good_thing %}
+                <div class="box beige">
+                    <span class="text-name"><strong>{{ ogt[0] }}</strong></span>: {{ ogt[1] }}
+                </div>
+            {% endfor %}
+
+        </main>
+ 
+        <footer>
+            <br>
+            <p style="text-align:center">The next issue of <span style="font-style: italic">Chatime Newsletter</span> will be delivered on:</p>
+            <h4>{{ next_date.strftime("%A, %B %d") }}</h4>
+        </footer>
+
+    </div>
+    <!-- <p style="font-size:100px">📷☀️</p> -->
+</body>
+
+ 
+</html>
