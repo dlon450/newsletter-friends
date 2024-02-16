@@ -2,7 +2,7 @@
 Send an HTML newsletter via email to friends. Content in newsletter is retrieved from a Google Form responses file.
 
 ## Getting Started
-A Gmail account and app password is required for emails to be sent (see [here](https://support.google.com/accounts/answer/185833?hl=en) on how to set up an app password). A Google Form is also required for people to upload the content (e.g., images, question responses) that will be included in the HTML newsletter, as well as a corresponding Google Spreadsheet containing response data. The form, spreadsheet, and any related folders in Google Drive will need to be set to "Anyone can view".
+A Gmail account and app password are required for emails to be sent (see [here](https://support.google.com/accounts/answer/185833?hl=en) on how to set up an app password). A Google Form is also required for people to upload the content (e.g., images, question responses) that will be included in the HTML newsletter, as well as a corresponding Google Spreadsheet containing response data. The form, spreadsheet, and any related folders in Google Drive will need to be set to "Anyone can view".
 
 When using this repo locally, you will need to set up a .env file containing email addresses, passwords, and the Google Spreadsheet corresponding to the Google Form. It should look something like this:
 
