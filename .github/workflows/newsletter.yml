@@ -23,7 +23,7 @@ jobs:
       - name: Send newsletter to friends
         env:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
-          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
           RECIPIENT: ${{ secrets.RECIPIENT }}
           SHEET_ID: ${{ secrets.SHEET_ID }}
           SHEET_NAME: ${{ secrets.SHEET_NAME }}
