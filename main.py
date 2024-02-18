@@ -9,10 +9,11 @@ import pytz
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 class Newsletter:
 
-    def __init__(self, first_edition_date, frequency, timezone, sender, recipients, password, sheet_id, sheet_name):
+    def __init__(self, first_edition_date, frequency_unit, frequency, timezone, sender, recipients, password, sheet_id, sheet_name):
         
         self.datetime_now = datetime.now(tz=pytz.timezone(timezone))
         self.sender = sender
@@ -20,10 +21,11 @@ class Newsletter:
         self.frequency = frequency
         self.first_edition_date = first_edition_date
         self.password = password
+        self.time_delta = {'month': relativedelta(months=+self.frequency), 'day': timedelta(days=self.frequency)}[frequency_unit]
 
         url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}'.replace(" ", "%20")
         data_df = pd.read_csv(url).replace(np.nan, '')
-        self.data_df = data_df[pd.to_datetime(data_df["Timestamp"]) > pd.to_datetime(self.datetime_now - timedelta(days=self.frequency)).date().strftime("%Y/%m/%d")]
+        self.data_df = data_df[pd.to_datetime(data_df["Timestamp"]) >= pd.to_datetime(self.datetime_now - self.time_delta).date().strftime("%Y/%m/%d")]
 
     def generate_newsletter(self):
         '''
@@ -45,7 +47,7 @@ class Newsletter:
             "one_good_thing": [(name, ogt) for ogt, name in zip(one_good_thing, names) if ogt != ''],
             "images": [(images[i][j].replace('open?', 'uc?export=view&'), names[j], captions[i][j]) for j in range(len(names)) for i in range(len(images)) if images[i][j] != ''],
             "date": self.datetime_now,
-            "next_date": self.datetime_now + timedelta(days=self.frequency),
+            "next_date": self.datetime_now + self.time_delta,
             "edition_number": (datetime.now() - datetime.strptime(first_edition_date, "%Y/%m/%d")).seconds // (86400 * self.frequency) + 1
         }
         self.email_content = template.render(self.email_data)
@@ -68,7 +70,8 @@ if __name__ == "__main__":
 
     # parameters
     first_edition_date = '2024/02/15'
-    frequency = 7 # no. days between newsletters
+    frequency_unit = 'month' #'month' or 'day'
+    frequency = 1 #time between newsletters with unit `frequency_unit`
     timezone = "Pacific/Auckland"
 
     load_dotenv()
@@ -80,6 +83,6 @@ if __name__ == "__main__":
     sheet_name = os.getenv("SHEET_NAME")
     
     # send email
-    newsletter = Newsletter(first_edition_date, frequency, timezone, sender, recipients, password, sheet_id, sheet_name)
+    newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, password, sheet_id, sheet_name)
     newsletter.generate_newsletter()
     newsletter.send_email()
