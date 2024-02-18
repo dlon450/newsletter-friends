@@ -42,7 +42,7 @@ class Newsletter:
         captions = [self.data_df[f"Caption {i}"].to_list() for i in range(1, 4)]
 
         self.email_data = {
-            "subject": "Monthly Newsletter",
+            "subject": "Chatime Newsletter 🍵",
             "question_title": self.data_df.columns[2],
             "question_answers": [(name, answer) for name, answer in zip(names, question) if answer != ''],
             "one_good_thing": [(name, ogt) for ogt, name in zip(one_good_thing, names) if ogt != ''],
