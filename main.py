@@ -48,7 +48,7 @@ class Newsletter:
             "images": [(images[i][j].replace('open?', 'uc?export=view&'), names[j], captions[i][j]) for j in range(len(names)) for i in range(len(images)) if images[i][j] != ''],
             "date": self.datetime_now,
             "next_date": self.datetime_now + self.time_delta,
-            "edition_number": (datetime.now() - datetime.strptime(first_edition_date, "%Y/%m/%d")).seconds // (86400 * self.frequency) + 1
+            "edition_number": edition_number()
         }
         self.email_content = template.render(self.email_data)
 
@@ -65,6 +65,20 @@ class Newsletter:
             smtp_server.login(self.sender, self.password)
             smtp_server.sendmail(self.sender, self.recipients, msg.as_string())
         print("Message sent!")
+
+def edition_number():
+    '''
+    Return the newsletter edition number 
+    '''
+    if not os.path.exists('log.txt'):
+        with open('log.txt','w') as f:
+            f.write('0')
+    with open('log.txt','r') as f:
+        st = int(f.read())
+        st += 1 
+    with open('log.txt','w') as f:
+        f.write(str(st))
+    return st
 
 if __name__ == "__main__":
 
