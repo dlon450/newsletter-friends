@@ -13,7 +13,7 @@ from dateutil.relativedelta import relativedelta
 
 class Newsletter:
 
-    def __init__(self, first_edition_date, frequency_unit, frequency, timezone, sender, recipients, password, sheet_id, sheet_name):
+    def __init__(self, first_edition_date, frequency_unit, frequency, timezone, sender, recipients, password, sheet_id, sheet_name, background_url):
         
         self.datetime_now = datetime.now(tz=pytz.timezone(timezone))
         self.sender = sender
@@ -22,6 +22,7 @@ class Newsletter:
         self.first_edition_date = first_edition_date
         self.password = password
         self.time_delta = {'month': relativedelta(months=+self.frequency), 'day': timedelta(days=self.frequency)}[frequency_unit]
+        self.background_url = background_url
 
         url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}'.replace(" ", "%20")
         data_df = pd.read_csv(url).replace(np.nan, '')
@@ -48,7 +49,8 @@ class Newsletter:
             "images": [(images[i][j].replace('open?', 'uc?export=view&'), names[j], captions[i][j]) for j in range(len(names)) for i in range(len(images)) if images[i][j] != ''],
             "date": self.datetime_now,
             "next_date": self.datetime_now + self.time_delta,
-            "edition_number": edition_number()
+            "edition_number": edition_number(),
+            "background_url": self.background_url
         }
         self.email_content = template.render(self.email_data)
 
@@ -95,8 +97,9 @@ if __name__ == "__main__":
     password = os.getenv("APP_PASSWORD")
     sheet_id = os.getenv("SHEET_ID")
     sheet_name = os.getenv("SHEET_NAME")
+    background_url = os.getenv("BACKGROUND_URL")
     
     # send email
-    newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, password, sheet_id, sheet_name)
+    newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, password, sheet_id, sheet_name, background_url)
     newsletter.generate_newsletter()
     newsletter.send_email()
