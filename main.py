@@ -63,11 +63,12 @@ class Newsletter:
         msg = MIMEMultipart()
         msg['Subject'] = self.email_data["subject"] + " " + self.email_data["date"].strftime("%m/%d")
         msg['From'] = sender
-        msg['To'] = ', '.join(recipients)
+        msg['To'] = sender
         msg.attach(MIMEText(self.email_content, "html"))
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+            smtp_server.ehlo()
             smtp_server.login(self.sender, self.password)
-            smtp_server.sendmail(self.sender, self.recipients, msg.as_string())
+            smtp_server.sendmail(self.sender, [sender] + self.recipients, msg.as_string()) # recipients are BCCed
         print("Message sent!")
 
 def edition_number():
