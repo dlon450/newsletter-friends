@@ -54,7 +54,6 @@ class Newsletter:
             "edition_number": edition_number(),
             "background_url": self.background_url
         }
-        print(self.email_data["background_url"])
         self.email_content = template.render(self.email_data)
 
     def send_email(self):
@@ -100,8 +99,7 @@ if __name__ == "__main__":
     password = os.getenv("APP_PASSWORD")
     sheet_id = os.getenv("SHEET_ID")
     sheet_name = os.getenv("SHEET_NAME")
-    background_url = os.getenv("BACKGROUND_URL")
-    print(background_url)
+    background_url = f'https://drive.google.com/uc?export=view&id={os.getenv("BACKGROUND_ID")}'
 
     # send email
     newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, password, sheet_id, sheet_name, background_url)
