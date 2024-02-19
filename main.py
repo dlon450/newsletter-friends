@@ -54,6 +54,7 @@ class Newsletter:
             "edition_number": edition_number(),
             "background_url": self.background_url
         }
+        print(self.email_data["background_url"])
         self.email_content = template.render(self.email_data)
 
     def send_email(self):
@@ -100,7 +101,8 @@ if __name__ == "__main__":
     sheet_id = os.getenv("SHEET_ID")
     sheet_name = os.getenv("SHEET_NAME")
     background_url = os.getenv("BACKGROUND_URL")
-    
+    print(background_url)
+
     # send email
     newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, password, sheet_id, sheet_name, background_url)
     newsletter.generate_newsletter()
