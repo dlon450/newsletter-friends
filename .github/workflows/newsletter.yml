@@ -33,3 +33,7 @@ jobs:
           BACKGROUND_URL: ${{ secrets.BACKGROUND_URL }}
         run: |
           python main.py
+
+          git add -A
+          git commit -m "update log"
+          git push
