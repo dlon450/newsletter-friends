@@ -38,6 +38,7 @@ class Newsletter:
         question = self.data_df.iloc[:, 2].to_list()
         names = self.data_df["Your Name"].to_list()
         one_good_thing = self.data_df["One Good Thing"].to_list()
+        life_updates = self.data_df["Any life updates?"].to_list()
         images = [self.data_df[f"Image {i}"].to_list() for i in range(1, 4)]
         captions = [self.data_df[f"Caption {i}"].to_list() for i in range(1, 4)]
 
@@ -45,6 +46,7 @@ class Newsletter:
             "subject": "Chatime Newsletter 🍵",
             "question_title": self.data_df.columns[2],
             "question_answers": [(name, answer) for name, answer in zip(names, question) if answer != ''],
+            "life_updates": [(name, answer) for name, answer in zip(names, life_updates) if answer != ''],
             "one_good_thing": [(name, ogt) for ogt, name in zip(one_good_thing, names) if ogt != ''],
             "images": [(images[i][j].replace('open?', 'uc?export=view&'), names[j], captions[i][j]) for j in range(len(names)) for i in range(len(images)) if images[i][j] != ''],
             "date": self.datetime_now,
