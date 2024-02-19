@@ -99,9 +99,8 @@ if __name__ == "__main__":
     password = os.getenv("APP_PASSWORD")
     sheet_id = os.getenv("SHEET_ID")
     sheet_name = os.getenv("SHEET_NAME")
-    background_url = f'https://drive.google.com/uc?export=view&id={os.getenv("BACKGROUND_ID")}'
-    print(background_url)
-
+    background_url = os.getenv("BACKGROUND_URL")
+    
     # send email
     newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, password, sheet_id, sheet_name, background_url)
     newsletter.generate_newsletter()

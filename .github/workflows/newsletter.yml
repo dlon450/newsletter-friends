@@ -30,5 +30,6 @@ jobs:
           RECIPIENT: ${{ secrets.RECIPIENT }}
           SHEET_ID: ${{ secrets.SHEET_ID }}
           SHEET_NAME: ${{ secrets.SHEET_NAME }}
+          BACKGROUND_URL: ${{ secrets.BACKGROUND_URL }}
         run: |
           python main.py
