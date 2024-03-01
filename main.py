@@ -2,6 +2,7 @@ from jinja2 import Template
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
 from dotenv import load_dotenv
 import ast
 import os
@@ -10,6 +11,10 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+
+from PIL import Image
+from io import BytesIO
+import requests
 
 class Newsletter:
 
@@ -60,11 +65,20 @@ class Newsletter:
         '''
         Send email containing newsletter
         '''
+        image_data = Image.open(requests.get('https://drive.google.com/uc?export=view&id=18EqFPtq63byMpd5ZS4xvJNR0FkOQVqls', stream=True).raw)
+        byte_buffer = BytesIO()
+        image_data.save(byte_buffer, "PNG")
+
         msg = MIMEMultipart()
         msg['Subject'] = self.email_data["subject"] + " " + self.email_data["date"].strftime("%m/%d")
         msg['From'] = sender
         msg['To'] = sender
         msg.attach(MIMEText(self.email_content, "html"))
+
+        image = MIMEImage(byte_buffer.getvalue())
+        image.add_header('Content-ID', "<image1>")
+        msg.attach(image)
+
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
             smtp_server.ehlo()
             smtp_server.login(self.sender, self.password)
