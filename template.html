@@ -8,7 +8,7 @@
     <style>
         .header {
             /* background: #faf5f1; */
-            background-image: url("{{ background_url }}");
+            background-image: url("cid:image0");
             margin-top: 50px;
             height: 225px;
             background-size : cover;
@@ -147,8 +147,9 @@
 
             <h3>Photo Wall</h3>
             {% for picture in images %}
-                <p><img src="{{ picture[0] }}" alt="{{ picture[2] }}"></p><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
-            {% endfor %}            
+                <img src="cid:image{{ loop.index }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
+            {% endfor %}
+
 
             <h3>One Good Thing </h3>
             {% for ogt in one_good_thing %}

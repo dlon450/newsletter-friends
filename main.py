@@ -12,7 +12,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
-from PIL import Image
+from PIL import Image, ImageOps
 from io import BytesIO
 import requests
 
@@ -53,7 +53,7 @@ class Newsletter:
             "question_answers": [(name, answer) for name, answer in zip(names, question) if answer != ''],
             "life_updates": [(name, answer) for name, answer in zip(names, life_updates) if answer != ''],
             "one_good_thing": [(name, ogt) for ogt, name in zip(one_good_thing, names) if ogt != ''],
-            "images": [(images[i][j].replace('open?', 'uc?export=view&'), names[j], captions[i][j]) for j in range(len(names)) for i in range(len(images)) if images[i][j] != ''],
+            "images": [[images[i][j].replace('open?', 'uc?export=view&'), names[j], captions[i][j]] for j in range(len(names)) for i in range(len(images)) if images[i][j] != ''],
             "date": self.datetime_now,
             "next_date": self.datetime_now + self.time_delta,
             "edition_number": edition_number(),
@@ -65,19 +65,12 @@ class Newsletter:
         '''
         Send email containing newsletter
         '''
-        image_data = Image.open(requests.get('https://drive.google.com/uc?export=view&id=18EqFPtq63byMpd5ZS4xvJNR0FkOQVqls', stream=True).raw)
-        byte_buffer = BytesIO()
-        image_data.save(byte_buffer, "PNG")
-
         msg = MIMEMultipart()
         msg['Subject'] = self.email_data["subject"] + " " + self.email_data["date"].strftime("%m/%d")
         msg['From'] = sender
         msg['To'] = sender
+        self.image_to_byte(msg)
         msg.attach(MIMEText(self.email_content, "html"))
-
-        image = MIMEImage(byte_buffer.getvalue())
-        image.add_header('Content-ID', "<image1>")
-        msg.attach(image)
 
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
             smtp_server.ehlo()
@@ -85,6 +78,23 @@ class Newsletter:
             smtp_server.sendmail(self.sender, [sender] + self.recipients, msg.as_string()) # recipients are BCCed
         print("Message sent!")
 
+    def image_to_byte(self, msg):
+        for i, (url, _, _) in enumerate([[self.background_url, '', '']] + self.email_data["images"]):
+            image_data = ImageOps.exif_transpose(Image.open(requests.get(url, stream=True).raw))
+            if image_data.mode in ("RGBA", "P"): image_data = image_data.convert("RGB")
+            quality = 95
+            while True:
+                byte_buffer = BytesIO()
+                image_data.save(byte_buffer, format="JPEG", quality=quality)
+                if byte_buffer.tell() / 1000000 > 0.8:
+                    quality -= 5
+                else:
+                    break 
+            image = MIMEImage(byte_buffer.getvalue())
+            image.add_header('Content-ID', f"<image{i}>")
+            msg.attach(image)
+            print("image", i, byte_buffer.tell() / 1000000)
+    
 def edition_number():
     '''
     Return the newsletter edition number 
