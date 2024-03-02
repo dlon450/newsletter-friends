@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.google.com/specimen/Source+Serif+4">
+    <style>
+        .header {
+            /* background: #faf5f1; */
+            background-image: url("{{ background_url }}");
+            margin-top: 50px;
+            height: 225px;
+            background-size : cover;
+            background-repeat: no-repeat;
+            text-align: center;
+        }
+        @media screen and (max-width:632px) {
+            .header {
+                height: 150px;
+                margin-top: 0px;
+                background-size : contain;
+                background-repeat: no-repeat;
+            }
+        }
+        body {
+            font-family: 'Source Serif 4', serif;
+            font-size: 16px;
+        }
+        @media screen and (max-width:632px) {
+            body {
+                font-family: 'Source Serif 4', serif;
+                font-size: 12px;
+            }
+        }
+
+        p {
+            font-family: 'Source Serif 4', serif;
+            font-size: 16px;
+        }
+        @media screen and (max-width:632px) {
+            p {
+                font-size: 12px;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            font-family: serif;
+            margin-bottom: 0px;
+            font-size: 36px;
+        }
+        @media screen and (max-width:632px) {
+            h1 {
+                font-size: 22px;
+            }
+        }
+
+        h3 {
+            font-family: serif;
+            margin-top: 30px;
+            margin-bottom: 25px;
+            font-size: 20px;
+        }
+        @media screen and (max-width:632px) {
+            h3 {
+                font-size: 14px;
+            }
+        }
+
+        h4 {
+            text-align: center;
+            font-family: serif;
+            margin-top: 0px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        @media screen and (max-width:632px) {
+            h4 {
+                font-size: 13px;
+            }
+        }
+
+        .container {
+            color: rgb(0, 0, 0);
+            padding-bottom: 50px;
+            margin: 0 auto;
+            width: 65%;
+            font-family: serif;
+            font-size: 16px;
+            max-width: 600px;
+        }
+        @media screen and (max-width:632px) {
+            .container {
+                width: 100%;
+                font-size: 12px;
+            }
+        }
+
+        .box {
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        @media screen and (max-width:632px) {
+            .box {
+                font-size: 12px;
+            }
+        }
+
+        .beige {
+            background: #faf5f1;
+        }
+
+        .text-name {
+            color: #133f63;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+ 
+<body>
+    <div class="container">
+        <header class="header"></header>
+        
+        <h1>Chatime Newsletter</h1>
+        <p style="text-align:center; margin-top: 0px;">Issue No. {{ edition_number }} • {{ date.strftime("%A, %B %d") }}</p>
+    
+        <hr>
+
+        <main>
+            
+            <h3>{{ question_title }}</h3>
+            {% for answer in question_answers %}
+                <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
+            {% endfor %}
+
+            <h3>Any life updates?</h3>
+            {% for answer in life_updates %}
+                <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
+            {% endfor %}
+
+            <h3>Photo Wall</h3>
+            {% for picture in images %}
+                <img src="{{ picture[0] }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
+            {% endfor %}
+
+            <h3>One Good Thing </h3>
+            {% for ogt in one_good_thing %}
+                <div class="box beige">
+                    <span class="text-name"><strong>{{ ogt[0] }}</strong></span>: {{ ogt[1] }}
+                </div>
+            {% endfor %}
+
+        </main>
+ 
+        <footer>
+            <br>
+            <p style="text-align:center">The next issue of <span style="font-style: italic">Chatime Newsletter</span> will be delivered on:</p>
+            <h4>{{ next_date.strftime("%A, %B %d") }}</h4>
+        </footer>
+
+    </div>
+    <!-- <p style="font-size:100px">📷☀️</p> -->
+</body>
+
+ 
+</html>

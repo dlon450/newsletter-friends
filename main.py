@@ -1,28 +1,28 @@
 from jinja2 import Template
-import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
+from PIL import Image, ImageOps
+from io import BytesIO
 import ast
 import os
 import pytz
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
-
-from PIL import Image, ImageOps
-from io import BytesIO
 import requests
+import smtplib
 
 class Newsletter:
 
-    def __init__(self, first_edition_date, frequency_unit, frequency, timezone, sender, recipients, password, sheet_id, sheet_name, background_url):
+    def __init__(self, first_edition_date, frequency_unit, frequency, timezone, sender, recipients, recipients_spark, password, sheet_id, sheet_name, background_url):
         
         self.datetime_now = datetime.now(tz=pytz.timezone(timezone))
         self.sender = sender
         self.recipients = recipients
+        self.recipients_spark = recipients_spark
         self.frequency = frequency
         self.first_edition_date = first_edition_date
         self.password = password
@@ -39,6 +39,9 @@ class Newsletter:
         '''
         with open('template.html', encoding="utf8") as f:
             template = Template(f.read())
+
+        with open('template_spark.html', encoding="utf8") as f:
+            template_spark = Template(f.read())
 
         question = self.data_df.iloc[:, 2].to_list()
         names = self.data_df["Your Name"].to_list()
@@ -60,8 +63,9 @@ class Newsletter:
             "background_url": self.background_url
         }
         self.email_content = template.render(self.email_data)
+        self.email_content_spark = template_spark.render(self.email_data)
 
-    def send_email(self):
+    def send_email(self, spark=False):
         '''
         Send email containing newsletter
         '''
@@ -69,13 +73,19 @@ class Newsletter:
         msg['Subject'] = self.email_data["subject"] + " " + self.email_data["date"].strftime("%m/%d")
         msg['From'] = sender
         msg['To'] = sender
-        self.image_to_byte(msg)
-        msg.attach(MIMEText(self.email_content, "html"))
+        if spark: 
+            self.image_to_byte(msg)
+            msg.attach(MIMEText(self.email_content_spark, "html"))
+        else:
+            msg.attach(MIMEText(self.email_content, "html"))
 
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
             smtp_server.ehlo()
             smtp_server.login(self.sender, self.password)
-            smtp_server.sendmail(self.sender, [sender] + self.recipients, msg.as_string()) # recipients are BCCed
+            if spark:
+                smtp_server.sendmail(self.sender, [sender] + self.recipients_spark, msg.as_string()) # recipients are BCCed
+            else:
+                smtp_server.sendmail(self.sender, [sender] + self.recipients, msg.as_string()) # recipients are BCCed
         print("Message sent!")
 
     def image_to_byte(self, msg):
@@ -112,7 +122,7 @@ def edition_number():
 if __name__ == "__main__":
 
     # parameters
-    first_edition_date = '2024/02/15'
+    first_edition_date = '2024/03/01'
     frequency_unit = 'month' #'month' or 'day'
     frequency = 1 #time between newsletters with unit `frequency_unit`
     timezone = "Pacific/Auckland"
@@ -120,12 +130,15 @@ if __name__ == "__main__":
     load_dotenv()
     sender = os.getenv("GMAIL_ADDRESS")
     recipients = ast.literal_eval(os.getenv("RECIPIENT"))
+    recipients_spark = ast.literal_eval(os.getenv("RECIPIENT_SPARK"))
     password = os.getenv("APP_PASSWORD")
     sheet_id = os.getenv("SHEET_ID")
     sheet_name = os.getenv("SHEET_NAME")
     background_url = os.getenv("BACKGROUND_URL")
     
     # send email
-    newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, password, sheet_id, sheet_name, background_url)
+    newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, recipients_spark, password, sheet_id, sheet_name, background_url)
     newsletter.generate_newsletter()
     newsletter.send_email()
+    if recipients_spark:
+        newsletter.send_email(spark=True)

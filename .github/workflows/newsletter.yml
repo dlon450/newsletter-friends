@@ -22,11 +22,14 @@ jobs:
           python -m pip install python-dotenv
           python -m pip install pandas
           python -m pip install Jinja2
+          python -m pip install pillow
+          python -m pip install requests
       - name: Send newsletter to friends
         env:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
           RECIPIENT: ${{ secrets.RECIPIENT }}
+          RECIPIENT_SPARK: ${{ secrets.RECIPIENT_SPARK }}
           SHEET_ID: ${{ secrets.SHEET_ID }}
           SHEET_NAME: ${{ secrets.SHEET_NAME }}
           BACKGROUND_URL: ${{ secrets.BACKGROUND_URL }}
