@@ -28,7 +28,7 @@ jobs:
         env:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
-          RECIPIENT: ${{ secrets.RECIPIENT }}
+          RECIPIENT: ${{ secrets.GMAIL_ADDRESS }}
           RECIPIENT_SPARK: ${{ secrets.RECIPIENT_SPARK }}
           SHEET_ID: ${{ secrets.SHEET_ID }}
           SHEET_NAME: ${{ secrets.SHEET_NAME }}
