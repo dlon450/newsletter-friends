@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.google.com/specimen/Source+Serif+4">
+    <style>
+        .image-container {
+            width: 65%;
+            font-family: serif;
+            max-width: 600px;
+            margin: auto;
+        }
+        @media screen and (max-width:632px) {
+            .image-container {
+                width: 100%;
+            }
+        }
+
+        .image-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            background-color: #ffffff; 
+            color: #000000; 
+            padding: 10px 12px; 
+            font-size: 12px; 
+            text-align: center;
+        }
+    </style>
+</head>
+ 
+<body>
+    <main>
+        <div class="image-container">
+            <div class="overlay-text"><a href="{{ form_url }}">Submit your responses/photos to the next edition of <span style="font-style: italic">Chatime Newsletter</span> before the end of the month!</a></div>
+            <a href="{{ form_url }}"><img src="cid:image" alt="Previous Image"></a>
+        </div>
+    </main>
+    <footer>
+        <p style="text-align:center; font-style: italic;">*Randomly chosen photo from a previous edition</p>
+    </footer>
+</body>
+
+</html>
