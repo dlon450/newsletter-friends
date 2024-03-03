@@ -6,9 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.google.com/specimen/Source+Serif+4">
     <style>
+        p {
+            font-family: 'Source Serif 4', serif;
+            font-size: 16px;
+        }
+        @media screen and (max-width:632px) {
+            p {
+                font-size: 12px;
+            }
+        }
+
         .image-container {
             width: 65%;
-            font-family: serif;
+            font-family: 'Source Serif 4', serif;
             max-width: 600px;
             margin: auto;
         }
@@ -32,18 +42,26 @@
             background-color: #ffffff; 
             color: #000000; 
             padding: 10px 12px; 
-            font-size: 12px; 
+            font-family: 'Source Serif 4', serif;
+            font-size: 16px; 
             text-align: center;
+        }
+        @media screen and (max-width:632px) {
+            .overlay-text {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
  
 <body>
     <main>
-        <div class="image-container">
-            <div class="overlay-text"><a href="{{ form_url }}">Submit your responses/photos to the next edition of <span style="font-style: italic">Chatime Newsletter</span> before the end of the month!</a></div>
-            <a href="{{ form_url }}"><img src="cid:image" alt="Previous Image"></a>
-        </div>
+        <a href="{{ form_url }}">
+            <div class="image-container">
+                <div class="overlay-text"><a href="{{ form_url }}">Submit your responses/photos to the next edition of <span style="font-style: italic">Chatime Newsletter</span> before the end of the month!</a></div>
+                <a href="{{ form_url }}"><img src="cid:image" alt="Previous Image"></a>
+            </div>
+        </a>
     </main>
     <footer>
         <p style="text-align:center; font-style: italic;">*Randomly chosen photo from a previous edition</p>
