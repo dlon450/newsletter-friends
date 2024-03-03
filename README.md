@@ -10,9 +10,11 @@ When using this repo locally, you will need to set up a .env file containing ema
 GMAIL_ADDRESS=sender@gmail.com
 APP_PASSWORD=xxxxxxxxxxxxxxxx
 RECIPIENT=["recipient1@gmail.com", "recipient2@gmail.com", ...]
+RECIPIENT_SPARK=["recipient3@outlook.com", "recipient4@outlook.com", ...]
 SHEET_ID=xxxxxxxxxxxxxxxx
 SHEET_NAME="xxxxxxxxxxxxxxxx"
 BACKGROUND_URL=xxxxxxxxxxxxxxxx
+FORM_URL=xxxxxxxxxxxxxxxx
 ```
 
 Then, run ``main.py``. Otherwise, if using this repo with GitHub Actions, you will need to add these hidden variables as secrets (Settings > Secrets and Variables > Actions > New repository secret).
