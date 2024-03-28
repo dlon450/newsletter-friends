@@ -28,6 +28,7 @@ class Newsletter:
         self.password = password
         self.time_delta = {'month': relativedelta(months=+self.frequency), 'day': timedelta(days=self.frequency)}[frequency_unit]
         self.background_url = background_url
+        self.max_image_byte = 0.
 
         url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}'.replace(" ", "%20")
         data_df = pd.read_csv(url).replace(np.nan, '')
@@ -62,6 +63,7 @@ class Newsletter:
             "edition_number": edition_number(),
             "background_url": self.background_url
         }
+        self.max_image_byte = 25. / (len(self.email_data["images"]) + 1)
         self.email_content = template.render(self.email_data)
         self.email_content_spark = template_spark.render(self.email_data)
 
@@ -96,7 +98,7 @@ class Newsletter:
             while True:
                 byte_buffer = BytesIO()
                 image_data.save(byte_buffer, format="JPEG", quality=quality)
-                if byte_buffer.tell() / 1000000 > 0.8:
+                if byte_buffer.tell() / 1000000 > self.max_image_byte:
                     quality -= 5
                 else:
                     break 
