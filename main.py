@@ -5,8 +5,9 @@ from email.mime.image import MIMEImage
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, UnidentifiedImageError
 from io import BytesIO
+from pillow_heif import register_heif_opener
 import ast
 import os
 import pytz
@@ -92,7 +93,11 @@ class Newsletter:
 
     def image_to_byte(self, msg):
         for i, (url, _, _) in enumerate([[self.background_url, '', '']] + self.email_data["images"]):
-            image_data = ImageOps.exif_transpose(Image.open(requests.get(url, stream=True).raw))
+            try:
+                image_data = ImageOps.exif_transpose(Image.open(requests.get(url, stream=True).raw))
+            except UnidentifiedImageError:
+                register_heif_opener()
+                image_data = ImageOps.exif_transpose(Image.open(requests.get(url, stream=True).raw))
             if image_data.mode in ("RGBA", "P"): image_data = image_data.convert("RGB")
             quality = 95
             while True:
@@ -141,6 +146,6 @@ if __name__ == "__main__":
     # send email
     newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, recipients_spark, password, sheet_id, sheet_name, background_url)
     newsletter.generate_newsletter()
-    newsletter.send_email()
+    # newsletter.send_email()
     if recipients_spark:
         newsletter.send_email(spark=True)
