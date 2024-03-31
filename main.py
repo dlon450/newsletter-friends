@@ -146,6 +146,6 @@ if __name__ == "__main__":
     # send email
     newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, recipients_spark, password, sheet_id, sheet_name, background_url)
     newsletter.generate_newsletter()
-    # newsletter.send_email()
+    newsletter.send_email()
     if recipients_spark:
         newsletter.send_email(spark=True)
