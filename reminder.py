@@ -36,7 +36,7 @@ class Reminder:
         with open('reminder.html', encoding="utf8") as f:
             template = Template(f.read())
         self.email_data = {
-            "subject": "🔔 NEWSLETTER REMINDER " + self.datetime_now.strftime("%m/%d") + " 🔔",
+            "subject": "💌 Newsletter Reminder " + self.datetime_now.strftime("%m/%d"),
             "image_url": random.choice(
                 [x for i in range(1, 4) for x in self.data_df[f"Image {i}"].to_list() if x]
                 ).replace('open?', 'uc?export=view&'),

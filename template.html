@@ -140,17 +140,17 @@
                 <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
             {% endfor %}
 
-            <h3>Any life updates?</h3>
+            <h3>✨ Any life updates?</h3>
             {% for answer in life_updates %}
                 <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
             {% endfor %}
 
-            <h3>Photo Wall</h3>
+            <h3>📷 Photo Wall</h3>
             {% for picture in images %}
                 <img src="{{ picture[0] }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
             {% endfor %}
 
-            <h3>One Good Thing </h3>
+            <h3>☀️ One Good Thing </h3>
             {% for ogt in one_good_thing %}
                 <div class="box beige">
                     <span class="text-name"><strong>{{ ogt[0] }}</strong></span>: {{ ogt[1] }}
