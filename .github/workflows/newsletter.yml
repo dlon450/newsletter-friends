@@ -2,8 +2,10 @@ name: Daily newsletter workflow
 
 on:
   schedule:
-    - cron: '0 11 30 4,6,9,11 *'
-    - cron: '0 11 31 1,3,5,7,8,10,12 *'
+    - cron: '0 11 30 9,11 *'
+    - cron: '0 12 30 4,6 *'
+    - cron: '0 11 31 1,3,10,12 *'
+    - cron: '0 12 31 5,7,8 *'
     - cron: '0 11 29 2 *'
     - cron: '0 11 28 2 *'
   workflow_dispatch:
@@ -25,6 +27,7 @@ jobs:
           python -m pip install Jinja2
           python -m pip install pillow
           python -m pip install requests
+          python -m pip install pillow-heif
       - name: Send newsletter to friends
         env:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
