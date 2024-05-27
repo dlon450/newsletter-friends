@@ -4,8 +4,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 from dotenv import load_dotenv
 from datetime import datetime
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, UnidentifiedImageError
 from io import BytesIO
+from pillow_heif import register_heif_opener
 import ast
 import os
 import pytz
@@ -62,7 +63,11 @@ class Reminder:
         print("Message sent!")
 
     def image_to_byte(self, msg):
-        image_data = ImageOps.exif_transpose(Image.open(requests.get(self.email_data["image_url"], stream=True).raw))
+        try:
+            image_data = ImageOps.exif_transpose(Image.open(requests.get(self.email_data["image_url"], stream=True).raw))
+        except UnidentifiedImageError:
+            register_heif_opener()
+            image_data = ImageOps.exif_transpose(Image.open(requests.get(self.email_data["image_url"], stream=True).raw))
         if image_data.mode in ("RGBA", "P"): image_data = image_data.convert("RGB")
         quality = 100
         while True:
