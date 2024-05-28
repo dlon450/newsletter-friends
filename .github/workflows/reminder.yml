@@ -26,6 +26,7 @@ jobs:
           python -m pip install Jinja2
           python -m pip install pillow
           python -m pip install requests
+          python -m pip install pillow-heif
       - name: Send reminder to friends
         env:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
