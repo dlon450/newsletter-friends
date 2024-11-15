@@ -137,7 +137,7 @@ if __name__ == "__main__":
     load_dotenv()
     sender = os.getenv("GMAIL_ADDRESS")
     recipients = ast.literal_eval(os.getenv("RECIPIENT"))
-    recipients_spark = ast.literal_eval(os.getenv("RECIPIENT_SPARK"))
+    recipients_spark = ast.literal_eval(os.getenv("RECIPIENT_SPARK")) # recipients_spark = ["thuonghoaile@outlook.com", "Kelvin.ang@outlook.co.nz"]
     password = os.getenv("APP_PASSWORD")
     sheet_id = os.getenv("SHEET_ID")
     sheet_name = os.getenv("SHEET_NAME")
