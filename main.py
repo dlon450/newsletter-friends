@@ -18,7 +18,8 @@ import smtplib
 
 class Newsletter:
 
-    def __init__(self, first_edition_date, frequency_unit, frequency, timezone, sender, recipients, recipients_spark, password, sheet_id, sheet_name, background_url):
+    def __init__(self, first_edition_date, frequency_unit, frequency, timezone, sender, recipients, 
+                 recipients_spark, password, sheet_id, sheet_name, background_url, special_edition=False, num_images=3):
         
         self.datetime_now = datetime.now(tz=pytz.timezone(timezone))
         self.sender = sender
@@ -30,6 +31,8 @@ class Newsletter:
         self.time_delta = {'month': relativedelta(months=+self.frequency), 'day': timedelta(days=self.frequency)}[frequency_unit]
         self.background_url = background_url
         self.max_image_byte = 0.
+        self.special_edition = special_edition
+        self.num_images = num_images if not special_edition else 5
 
         url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}'.replace(" ", "%20")
         data_df = pd.read_csv(url).replace(np.nan, '')
@@ -47,10 +50,12 @@ class Newsletter:
 
         question = self.data_df.iloc[:, 2].to_list()
         names = self.data_df["Your Name"].to_list()
-        one_good_thing = self.data_df["One Good Thing"].to_list()
-        life_updates = self.data_df["Any life updates?"].to_list()
-        images = [self.data_df[f"Image {i}"].to_list() for i in range(1, 4)]
-        captions = [self.data_df[f"Caption {i}"].to_list() for i in range(1, 4)]
+        one_good_thing = self.data_df["☀️ One Good Thing!"].to_list()
+        life_updates = self.data_df["✨ Any life updates?"].to_list()
+        images = [self.data_df[f"Image {i}"].to_list() for i in range(1, self.num_images + 1)]
+        captions = [self.data_df[f"Caption {i}"].to_list() for i in range(1, self.num_images + 1)]
+        food_spot = self.data_df['😋 Food spot of the month?'].to_list()
+        confessions = self.data_df['🤫 Any confessions you would like to make...'].to_list()
 
         self.email_data = {
             "subject": "Chatime Newsletter 🍵",
@@ -58,12 +63,27 @@ class Newsletter:
             "question_answers": [(name, answer) for name, answer in zip(names, question) if answer != ''],
             "life_updates": [(name, answer) for name, answer in zip(names, life_updates) if answer != ''],
             "one_good_thing": [(name, ogt) for ogt, name in zip(one_good_thing, names) if ogt != ''],
+            "food_spot": [(name, fs) for fs, name in zip(food_spot, names) if fs != ''],
+            "confessions": [(name, c) for c, name in zip(confessions, names) if c != ''],
             "images": [[images[i][j].replace('open?', 'uc?export=view&'), names[j], captions[i][j]] for j in range(len(names)) for i in range(len(images)) if images[i][j] != ''],
             "date": self.datetime_now,
             "next_date": self.datetime_now + self.time_delta,
             "edition_number": edition_number(),
-            "background_url": self.background_url
+            "background_url": self.background_url,
+            "special_images": []
         }
+
+        # special edition
+        if self.special_edition:
+            special_edition_questions = self.data_df.columns.to_list()[13:21]
+            special_edition_answers = {q: self.data_df[q].to_list() for q in special_edition_questions}
+            self.email_data["special_edition_questions"] = special_edition_questions
+            self.email_data["special_edition_answers"] = {q: [(name, answer) for name, answer in zip(names, special_edition_answers[q]) if answer != ''] for q in special_edition_questions}
+            self.email_data["special_images"] = [["https://drive.google.com/uc?export=view&id=1l1FlwMAIjFniO8x4avd8wIbjj6cujZQ4", "outdoor", "outdoor adventures"],
+                                                 ["https://drive.google.com/uc?export=view&id=190vk3CwfPAc5JwhNilIMv8hk65WdRjtR", "food", "food food food"],
+                                                 ["https://drive.google.com/uc?export=view&id=1skW31wczaWaThAxzUAU_BF1ah9niWN2u", "duos", "duos"],
+                                                 ["https://drive.google.com/uc?export=view&id=1lxTkVW7FNGWZ1qBEdbr1zEmq0uJ45nOC", "portraits", "portraits"]]
+
         self.max_image_byte = 25. / (len(self.email_data["images"]) + 1)
         self.email_content = template.render(self.email_data)
         self.email_content_spark = template_spark.render(self.email_data)
@@ -92,7 +112,7 @@ class Newsletter:
         print("Message sent!")
 
     def image_to_byte(self, msg):
-        for i, (url, _, _) in enumerate([[self.background_url, '', '']] + self.email_data["images"]):
+        for i, (url, _, _) in enumerate([[self.background_url, '', '']] + self.email_data["special_images"] + self.email_data["images"] ):
             try:
                 image_data = ImageOps.exif_transpose(Image.open(requests.get(url, stream=True).raw))
             except UnidentifiedImageError:
@@ -144,7 +164,8 @@ if __name__ == "__main__":
     background_url = os.getenv("BACKGROUND_URL")
     
     # send email
-    newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, recipients_spark, password, sheet_id, sheet_name, background_url)
+    newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, 
+                            recipients_spark, password, sheet_id, sheet_name, background_url, special_edition=True)
     newsletter.generate_newsletter()
     newsletter.send_email()
     if recipients_spark:

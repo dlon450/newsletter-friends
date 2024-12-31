@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
- 
+        
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.google.com/specimen/Source+Serif+4">
     <style>
+
         .header {
             /* background: #faf5f1; */
             background-image: url("{{ background_url }}");
@@ -46,6 +47,18 @@
         }
 
         h1 {
+            text-align: center;
+            font-family: serif;
+            margin-bottom: 0px;
+            font-size: 36px;
+        }
+        @media screen and (max-width:632px) {
+            h1 {
+                font-size: 22px;
+            }
+        }
+
+        h2 {
             text-align: center;
             font-family: serif;
             margin-bottom: 0px;
@@ -122,20 +135,42 @@
             height: auto;
             display: block;
         }
+
     </style>
 </head>
- 
+
 <body>
+
     <div class="container">
         <header class="header"></header>
-        
+
         <h1>Chatime Newsletter</h1>
         <p style="text-align:center; margin-top: 0px;">Issue No. {{ edition_number }} • {{ date.strftime("%A, %B %d") }}</p>
     
         <hr>
 
         <main>
-            
+
+            <h1>🎀 2024 Wrapped 🎀</h1>
+
+            <hr>
+
+            {% for question in special_edition_questions %}
+                <h3>{{ question }}</h3>
+                {% for answer in special_edition_answers[question] %}
+                    <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
+                {% endfor %}
+            {% endfor %}
+
+            <h3>📷 Photo Break</h3>
+            {% for picture in special_images %}
+                <img src="{{ picture[0] }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong></strong></span></div> 
+            {% endfor %}
+
+            <h1>December Updates</h1>
+
+            <hr>
+
             <h3>{{ question_title }}</h3>
             {% for answer in question_answers %}
                 <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
@@ -146,16 +181,30 @@
                 <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
             {% endfor %}
 
-            <h3>📷 Photo Wall</h3>
-            {% for picture in images %}
-                <img src="{{ picture[0] }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
-            {% endfor %}
-
-            <h3>☀️ One Good Thing </h3>
+            <h3>☀️ One Good Thing!</h3>
             {% for ogt in one_good_thing %}
                 <div class="box beige">
                     <span class="text-name"><strong>{{ ogt[0] }}</strong></span>: {{ ogt[1] }}
                 </div>
+            {% endfor %}
+
+            <h3>😋 Food spot of the month?</h3>
+            {% for fs in food_spot %}
+                <div class="box beige">
+                    <span class="text-name"><strong>{{ fs[0] }}</strong></span>: {{ fs[1] }}
+                </div>
+            {% endfor %}
+
+            <h3>🤫 Any confessions you would like to make...</h3>
+            {% for c in confessions %}
+                <div class="box beige">
+                    <span class="text-name"><strong>{{ c[0] }}</strong></span>: {{ c[1] }}
+                </div>
+            {% endfor %}
+            
+            <h3>📷 Photo Wall</h3>
+            {% for picture in images %}
+                <img src="{{ picture[0] }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
             {% endfor %}
 
         </main>
