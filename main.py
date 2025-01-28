@@ -79,11 +79,7 @@ class Newsletter:
             special_edition_answers = {q: self.data_df[q].to_list() for q in special_edition_questions}
             self.email_data["special_edition_questions"] = special_edition_questions
             self.email_data["special_edition_answers"] = {q: [(name, answer) for name, answer in zip(names, special_edition_answers[q]) if answer != ''] for q in special_edition_questions}
-            self.email_data["special_images"] = [["https://drive.google.com/uc?export=view&id=1l1FlwMAIjFniO8x4avd8wIbjj6cujZQ4", "outdoor", "outdoor adventures"],
-                                                 ["https://drive.google.com/uc?export=view&id=190vk3CwfPAc5JwhNilIMv8hk65WdRjtR", "food", "food food food"],
-                                                 ["https://drive.google.com/uc?export=view&id=1skW31wczaWaThAxzUAU_BF1ah9niWN2u", "duos", "duos"],
-                                                 ["https://drive.google.com/uc?export=view&id=1lxTkVW7FNGWZ1qBEdbr1zEmq0uJ45nOC", "portraits", "portraits"]]
-
+            
         self.max_image_byte = 25. / (len(self.email_data["images"]) + 1)
         self.email_content = template.render(self.email_data)
         self.email_content_spark = template_spark.render(self.email_data)
@@ -165,7 +161,7 @@ if __name__ == "__main__":
     
     # send email
     newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, 
-                            recipients_spark, password, sheet_id, sheet_name, background_url, special_edition=True)
+                            recipients_spark, password, sheet_id, sheet_name, background_url, special_edition=False)
     newsletter.generate_newsletter()
     newsletter.send_email()
     if recipients_spark:

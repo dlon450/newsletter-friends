@@ -135,7 +135,7 @@
 
         <main>
 
-            <h1>🎀 2024 Wrapped 🎀</h1>
+            <!-- <h1>🎀 2024 Wrapped 🎀</h1>
 
             <hr>
 
@@ -153,7 +153,7 @@
 
             <h1>December Updates</h1>
 
-            <hr>
+            <hr> -->
 
             <h3>{{ question_title }}</h3>
             {% for answer in question_answers %}
@@ -188,7 +188,7 @@
 
             <h3>📷 Photo Wall</h3>
             {% for picture in images %}
-                <img src="cid:image{{ loop.index + 4}}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
+                <img src="cid:image{{ loop.index }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
             {% endfor %}
 
         </main>
