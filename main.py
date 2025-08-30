@@ -55,7 +55,7 @@ class Newsletter:
         images = [self.data_df[f"Image {i}"].to_list() for i in range(1, self.num_images + 1)]
         captions = [self.data_df[f"Caption {i}"].to_list() for i in range(1, self.num_images + 1)]
         food_spot = self.data_df['😋 Food spot of the month?'].to_list()
-        confessions = self.data_df['🤫 Any confessions you would like to make...'].to_list()
+        confessions = self.data_df['🤫 Any interesting, funny, or embarrassing moments?'].to_list()
 
         self.email_data = {
             "subject": "Chatime Newsletter 🍵",
