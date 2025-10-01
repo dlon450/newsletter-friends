@@ -36,7 +36,10 @@ class Newsletter:
 
         url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}'.replace(" ", "%20")
         data_df = pd.read_csv(url).replace(np.nan, '')
-        self.data_df = data_df[pd.to_datetime(data_df["Timestamp"]) >= pd.to_datetime(self.datetime_now - self.time_delta).date().strftime("%Y/%m/%d")]
+        if self.frequency == 'month':
+            self.data_df = data_df[pd.to_datetime(data_df["Timestamp"]) >= pd.to_datetime(self.datetime_now - timedelta(days=14)).date().strftime("%Y/%m/%d")]
+        else:
+            self.data_df = data_df[pd.to_datetime(data_df["Timestamp"]) >= pd.to_datetime(self.datetime_now - self.time_delta).date().strftime("%Y/%m/%d")]
 
     def generate_newsletter(self):
         '''
@@ -153,7 +156,7 @@ if __name__ == "__main__":
     load_dotenv()
     sender = os.getenv("GMAIL_ADDRESS")
     recipients = ast.literal_eval(os.getenv("RECIPIENT"))
-    recipients_spark = ast.literal_eval(os.getenv("RECIPIENT_SPARK")) # recipients_spark = ["thuonghoaile@outlook.com", "Kelvin.ang@outlook.co.nz"]
+    recipients_spark = ast.literal_eval(os.getenv("RECIPIENT_SPARK"))
     password = os.getenv("APP_PASSWORD")
     sheet_id = os.getenv("SHEET_ID")
     sheet_name = os.getenv("SHEET_NAME")
