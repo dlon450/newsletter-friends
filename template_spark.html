@@ -4,129 +4,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.google.com/specimen/Source+Serif+4">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        .header {
-            /* background: #faf5f1; */
-            background-image: url("cid:image0");
-            margin-top: 50px;
-            height: 400px;
-            background-size : cover;
-            background-repeat: no-repeat;
-            text-align: center;
-        }
-        @media screen and (max-width:632px) {
-            .header {
-                height: 275px;
-                margin-top: 0px;
-                background-size : contain;
-                background-repeat: no-repeat;
-            }
-        }
-        body {
-            font-family: 'Source Serif 4', serif;
-            font-size: 16px;
-        }
-        @media screen and (max-width:632px) {
-            body {
-                font-family: 'Source Serif 4', serif;
-                font-size: 12px;
-            }
-        }
+/* Base styles (email-client friendly) */
+body {
+    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
 
-        p {
-            font-family: 'Source Serif 4', serif;
-            font-size: 16px;
-        }
-        @media screen and (max-width:632px) {
-            p {
-                font-size: 12px;
-            }
-        }
+.container {
+    color: rgb(0, 0, 0);
+    padding-bottom: 50px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    font-size: 16px;
+}
 
-        h1 {
-            text-align: center;
-            font-family: serif;
-            margin-bottom: 0px;
-            font-size: 36px;
-        }
-        @media screen and (max-width:632px) {
-            h1 {
-                font-size: 22px;
-            }
-        }
+.header {
+    /* background: #faf5f1; */
+    /* background-image: url("cid:image0");
+    margin-top: 50px;
+    height: 400px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;  */
+    text-align: center;
+}
 
-        h3 {
-            font-family: serif;
-            margin-top: 30px;
-            margin-bottom: 25px;
-            font-size: 20px;
-        }
-        @media screen and (max-width:632px) {
-            h3 {
-                font-size: 14px;
-            }
-        }
+p {
+    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
 
-        h4 {
-            text-align: center;
-            font-family: serif;
-            margin-top: 0px;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-        @media screen and (max-width:632px) {
-            h4 {
-                font-size: 13px;
-            }
-        }
+h1 {
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', serif;
+    margin-bottom: 0px;
+    font-size: 36px;
+    line-height: 1.2;
+}
 
-        .container {
-            color: rgb(0, 0, 0);
-            padding-bottom: 50px;
-            margin: 0 auto;
-            width: 65%;
-            font-family: serif;
-            font-size: 16px;
-            max-width: 600px;
-        }
-        @media screen and (max-width:632px) {
-            .container {
-                width: 100%;
-                font-size: 12px;
-            }
-        }
+h2 {
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', serif;
+    margin-bottom: 0px;
+    font-size: 36px;
+    line-height: 1.2;
+}
 
-        .box {
-            padding: 15px;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        @media screen and (max-width:632px) {
-            .box {
-                font-size: 12px;
-            }
-        }
+h3 {
+    font-family: Georgia, 'Times New Roman', serif;
+    margin-top: 30px;
+    margin-bottom: 25px;
+    font-size: 20px;
+    line-height: 1.25;
+}
 
-        .beige {
-            background: #faf5f1;
-        }
+h4 {
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', serif;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    line-height: 1.25;
+}
 
-        .text-name {
-            color: #133f63;
-        }
+.box {
+    padding: 15px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+}
 
-        img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-    </style>
+.beige {
+    background: #faf5f1;
+}
+
+.text-name {
+    color: #133f63;
+}
+
+/* Default: don't force ALL images to be big/block (prevents giant emoji icons) */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Only newsletter photos should be full-width block images */
+.news-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Extra safety: if a client converts emoji into <img class="emoji"> */
+img.emoji, img.wp-smiley {
+  width: 1em !important;
+  height: 1em !important;
+  display: inline !important;
+  vertical-align: -0.1em !important;
+}
+
+/* Make ONLY the Wrapped title pop */
+.wrapped-title {
+  margin: 34px 0 14px;  /* more breathing room */
+}
+
+.wrapped-badge {
+  display: inline-block;         /* makes it hug the text */
+  padding: 10px 14px;
+  border: 2px solid #133f63;
+  background: #faf5f1;
+  border-radius: 14px;
+
+  color: #133f63;
+  font-weight: 700;
+  font-size: 44px;               /* bigger than your normal h1 */
+  letter-spacing: 0.4px;
+  line-height: 1.15;
+}
+
+/* Mobile tweak */
+@media screen and (max-width:632px) {
+  .wrapped-badge {
+    font-size: 30px;
+    padding: 10px 12px;
+  }
+}
+
+/* If emojis get converted into <img> in some previews/clients, keep them inline-sized */
+.wrapped-badge img {
+  width: 1em !important;
+  height: 1em !important;
+  display: inline !important;
+  vertical-align: -0.1em !important;
+}
+
+
+/* Mobile: keep text readable (don’t shrink to 12px) */
+@media screen and (max-width:632px) {
+    .header {
+        /* height: 275px;
+        margin-top: 0px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center; */
+        text-align: center;
+    }
+
+    body { font-size: 16px; }
+    p { font-size: 16px; }
+
+    h1 { font-size: 28px; }
+    h2 { font-size: 28px; }
+    h3 { font-size: 18px; }
+    h4 { font-size: 16px; }
+
+    .container { width: 100%; font-size: 16px; }
+    .box { font-size: 16px; }
+}
+</style>
 </head>
  
 <body>
     <div class="container">
-        <header class="header"></header>
+        <header class="header">
+            <img class="news-img" src="cid:image0" alt="" class="header-img">
+        </header>
         
         <h1>Chatime Newsletter</h1>
         <p style="text-align:center; margin-top: 0px;">Issue No. {{ edition_number }} • {{ date.strftime("%A, %B %d") }}</p>
@@ -134,26 +186,6 @@
         <hr>
 
         <main>
-
-            <!-- <h1>🎀 2024 Wrapped 🎀</h1>
-
-            <hr>
-
-            {% for question in special_edition_questions %}
-                <h3>{{ question }}</h3>
-                {% for answer in special_edition_answers[question] %}
-                    <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
-                {% endfor %}
-            {% endfor %}
-
-            <h3>📷 Photo Break</h3>
-            {% for picture in special_images %}
-                <img src="cid:image{{ loop.index }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong></strong></span></div> 
-            {% endfor %}
-
-            <h1>December Updates</h1>
-
-            <hr> -->
 
             <h3>{{ question_title }}</h3>
             {% for answer in question_answers %}
@@ -188,7 +220,41 @@
 
             <h3>📷 Photo Wall</h3>
             {% for picture in images %}
-                <img src="cid:image{{ loop.index }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
+                <img class="news-img" src="cid:image{{ loop.index }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
+            {% endfor %}
+
+            <h1 class="wrapped-title"><span class="wrapped-badge">🎀 2025 Wrapped 🎀</span></h1>
+
+            <hr>
+            
+            <img class="news-img" src="cid:image{{ images|length + 1 }}" alt="{{ special_images[0][2] }}"><div class="box beige"><span class="text-name"><strong></strong></span>{{ special_images[0][2] }}</div>
+
+            {% for question in special_edition_questions[:4] %}
+                <h3>{{ question }}</h3>
+                {% for answer in special_edition_answers[question] %}
+                    <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
+                {% endfor %}
+            {% endfor %}
+
+            <h3>☀️ Outdoor adventures</h3>
+            <img class="news-img" src="cid:image{{ images|length + 2 }}" alt="{{ special_images[1][2] }}"><div class="box beige"><span class="text-name"><strong></strong></span></div>
+            
+            {% for question in special_edition_questions[4:] %}
+                <h3>{{ question }}</h3>
+                {% for answer in special_edition_answers[question] %}
+                    <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
+                {% endfor %}
+            {% endfor %}
+
+            <h3>🍵 If we had a chatime insta...</h3>
+            
+            <img class="news-img" src="cid:image{{ images|length + 3 }}" alt="{{ special_images[2][2] }}"><div class="box beige"><span class="text-name"><strong></strong></span></div>
+            <img class="news-img" src="cid:image{{ images|length + 4 }}" alt="{{ special_images[3][2] }}"><div class="box beige"><span class="text-name"><strong></strong></span></div>
+            <img class="news-img" src="cid:image{{ images|length + 5 }}" alt="{{ special_images[4][2] }}"><div class="box beige"><span class="text-name"><strong></strong></span></div>
+
+            <h3>📷 Extra Photo Wall</h3>
+            {% for picture in extra_images %}
+                <img class="news-img" src="cid:image{{ images|length + 5 + loop.index }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
             {% endfor %}
 
         </main>
@@ -197,6 +263,10 @@
             <br>
             <p style="text-align:center">The next issue of <span style="font-style: italic">Chatime Newsletter</span> will be delivered on:</p>
             <h4>{{ next_date.strftime("%A, %B %d") }}</h4>
+            <br>
+            <p style="text-align:center; margin:24px 0 10px; padding-top:14px; border-top:1px solid #e6ded6; font-size:16px; line-height:1.45; color:#666; font-weight:300; letter-spacing:0.2px;">
+                Thank you everyone for another wonderful year.
+            </p>   
         </footer>
 
     </div>

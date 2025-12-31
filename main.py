@@ -32,11 +32,11 @@ class Newsletter:
         self.background_url = background_url
         self.max_image_byte = 0.
         self.special_edition = special_edition
-        self.num_images = num_images if not special_edition else 5
+        self.num_images = num_images
 
         url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}'.replace(" ", "%20")
         data_df = pd.read_csv(url).replace(np.nan, '')
-        if self.frequency == 'month':
+        if frequency_unit == 'month':
             self.data_df = data_df[pd.to_datetime(data_df["Timestamp"]) >= pd.to_datetime(self.datetime_now - timedelta(days=14)).date().strftime("%Y/%m/%d")]
         else:
             self.data_df = data_df[pd.to_datetime(data_df["Timestamp"]) >= pd.to_datetime(self.datetime_now - self.time_delta).date().strftime("%Y/%m/%d")]
@@ -80,10 +80,20 @@ class Newsletter:
         if self.special_edition:
             special_edition_questions = self.data_df.columns.to_list()[13:21]
             special_edition_answers = {q: self.data_df[q].to_list() for q in special_edition_questions}
+            extra_images = [self.data_df[f"Extra Image {i}"].to_list() for i in range(1, self.num_images + 1)]
+            extra_image_captions = [self.data_df[f"Extra Caption {i}"].to_list() for i in range(1, self.num_images + 1)]
             self.email_data["special_edition_questions"] = special_edition_questions
             self.email_data["special_edition_answers"] = {q: [(name, answer) for name, answer in zip(names, special_edition_answers[q]) if answer != ''] for q in special_edition_questions}
-            
-        self.max_image_byte = 25. / (len(self.email_data["images"]) + 1)
+            self.email_data["extra_images"] = [[extra_images[i][j].replace('open?', 'uc?export=view&'), names[j], extra_image_captions[i][j]] for j in range(len(names)) for i in range(len(extra_images)) if extra_images[i][j] != '']
+            self.email_data["special_images"] = [
+                ["https://drive.google.com/uc?export=view&id=1N6Y3mYt3VbrL3NrUmn7vOUbP5RPHC5gy", "portraits", "need more selfies from some of y'all"],
+                ["https://drive.google.com/uc?export=view&id=1IUrWCdUdtwRD91bcKb5qdugiyzXZWHa4", "outdoor", "outdoor adventures"],
+                ["https://drive.google.com/uc?export=view&id=1IsQWyY3QxgkA15EvTgPOJ1BXr8tpvRuL", "instagram1", "if we had a chatime insta..."],
+                ["https://drive.google.com/uc?export=view&id=1Zv9QQ2_GVj5QKKQgwjpBllILC4v5J6Yg", "instagram2", "chatime instagram 2"],
+                ["https://drive.google.com/uc?export=view&id=1pU2sp4Kk8Oy0FjV2SbFbYxYFRUEI6fzI", "instagram3", "chatime instagram 3"]
+            ]
+
+        self.max_image_byte = 25. / (1 + len(self.email_data["images"]) + len(self.email_data["extra_images"]) + len(self.email_data["special_images"]))
         self.email_content = template.render(self.email_data)
         self.email_content_spark = template_spark.render(self.email_data)
 
@@ -111,7 +121,10 @@ class Newsletter:
         print("Message sent!")
 
     def image_to_byte(self, msg):
-        for i, (url, _, _) in enumerate([[self.background_url, '', '']] + self.email_data["special_images"] + self.email_data["images"] ):
+        for i, (url, _, _) in enumerate([[self.background_url, '', '']] 
+                                        + self.email_data["images"] 
+                                        + self.email_data["special_images"] 
+                                        + self.email_data["extra_images"]):
             try:
                 image_data = ImageOps.exif_transpose(Image.open(requests.get(url, stream=True).raw))
             except UnidentifiedImageError:
@@ -160,11 +173,12 @@ if __name__ == "__main__":
     password = os.getenv("APP_PASSWORD")
     sheet_id = os.getenv("SHEET_ID")
     sheet_name = os.getenv("SHEET_NAME")
-    background_url = os.getenv("BACKGROUND_URL")
+    # background_url = os.getenv("BACKGROUND_URL")
+    background_url = "https://drive.google.com/uc?export=view&id=1HE8AViMFFYldXWpBMWBZn4PVxGbDn6H1"
     
     # send email
     newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, 
-                            recipients_spark, password, sheet_id, sheet_name, background_url, special_edition=False)
+                            recipients_spark, password, sheet_id, sheet_name, background_url, special_edition=True)
     newsletter.generate_newsletter()
     newsletter.send_email()
     if recipients_spark:
