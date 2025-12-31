@@ -174,7 +174,7 @@ if __name__ == "__main__":
     sheet_id = os.getenv("SHEET_ID")
     sheet_name = os.getenv("SHEET_NAME")
     # background_url = os.getenv("BACKGROUND_URL")
-    background_url = "https://drive.google.com/uc?export=view&id=1HE8AViMFFYldXWpBMWBZn4PVxGbDn6H1"
+    background_url = "https://drive.google.com/uc?export=view&id=1Iko8ZnfAz58OdesVUSLCFaprEXx4us-R"
     
     # send email
     newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, 
