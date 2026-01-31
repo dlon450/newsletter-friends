@@ -73,7 +73,8 @@ class Newsletter:
             "next_date": self.datetime_now + self.time_delta,
             "edition_number": edition_number(),
             "background_url": self.background_url,
-            "special_images": []
+            # "special_images": [],
+            # "extra_images": [],
         }
 
         # special edition
@@ -93,7 +94,7 @@ class Newsletter:
                 ["https://drive.google.com/uc?export=view&id=1pU2sp4Kk8Oy0FjV2SbFbYxYFRUEI6fzI", "instagram3", "chatime instagram 3"]
             ]
 
-        self.max_image_byte = 25. / (1 + len(self.email_data["images"]) + len(self.email_data["extra_images"]) + len(self.email_data["special_images"]))
+        self.max_image_byte = 25. / (1 + len(self.email_data["images"])) # + len(self.email_data["extra_images"]) + len(self.email_data["special_images"]))
         self.email_content = template.render(self.email_data)
         self.email_content_spark = template_spark.render(self.email_data)
 
@@ -123,8 +124,9 @@ class Newsletter:
     def image_to_byte(self, msg):
         for i, (url, _, _) in enumerate([[self.background_url, '', '']] 
                                         + self.email_data["images"] 
-                                        + self.email_data["special_images"] 
-                                        + self.email_data["extra_images"]):
+                                        # + self.email_data["special_images"] 
+                                        # + self.email_data["extra_images"]
+            ):
             try:
                 image_data = ImageOps.exif_transpose(Image.open(requests.get(url, stream=True).raw))
             except UnidentifiedImageError:
@@ -173,9 +175,8 @@ if __name__ == "__main__":
     password = os.getenv("APP_PASSWORD")
     sheet_id = os.getenv("SHEET_ID")
     sheet_name = os.getenv("SHEET_NAME")
-    # background_url = os.getenv("BACKGROUND_URL")
-    background_url = "https://drive.google.com/uc?export=view&id=1Iko8ZnfAz58OdesVUSLCFaprEXx4us-R"
-    
+    background_url = os.getenv("BACKGROUND_URL")
+
     # send email
     newsletter = Newsletter(first_edition_date, frequency_unit, frequency, timezone, sender, recipients, 
                             recipients_spark, password, sheet_id, sheet_name, background_url, special_edition=True)
