@@ -139,6 +139,9 @@ class Newsletter:
                 image_data.save(byte_buffer, format="JPEG", quality=quality)
                 if byte_buffer.tell() / 1000000 > self.max_image_byte:
                     quality -= 5
+                    if quality <= 0:
+                        quality = 0.1
+                        break
                 else:
                     break 
             image = MIMEImage(byte_buffer.getvalue())
