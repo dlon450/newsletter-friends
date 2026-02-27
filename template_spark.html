@@ -188,9 +188,16 @@ img.emoji, img.wp-smiley {
         <main>
 
             <h3>{{ question_title }}</h3>
+            {% if question_mode == "diyl_gif" %}
+            {% for answer in question_answers %}
+                <img class="news-img" src="cid:{{ answer[1] }}" alt="{{ answer[0] }} DIYL">
+                <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[2] | e | replace('\r\n', '\n') | replace('\n\n', '<br><br>') | replace('\n', '<br>') | safe }}</div>
+            {% endfor %}
+            {% else %}
             {% for answer in question_answers %}
                 <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
             {% endfor %}
+            {% endif %}
 
             <h3>✨ Any life updates?</h3>
             {% for answer in life_updates %}
