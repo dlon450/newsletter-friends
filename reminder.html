@@ -1,71 +1,114 @@
 <!DOCTYPE html>
-<html>
- 
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.google.com/specimen/Source+Serif+4">
+    <title>Chatime Newsletter reminder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&amp;display=swap" rel="stylesheet">
     <style>
-        p {
-            font-family: 'Source Serif 4', serif;
-            font-size: 16px;
-        }
-        @media screen and (max-width:632px) {
-            p {
-                font-size: 12px;
-            }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3eee8;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
         }
 
-        .image-container {
-            width: 50%;
-            font-family: 'Source Serif 4', serif;
-            max-width: 500px;
-            margin: auto;
-        }
-        @media screen and (max-width:632px) {
-            .image-container {
-                width: 100%;
-            }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
         }
 
-        .image-container img {
+        img {
+            border: 0;
             display: block;
-            width: 100%;
             height: auto;
+            line-height: 100%;
+            max-width: 100%;
         }
 
-        .overlay-text {
-            position: absolute;
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            background-color: #ffffff; 
-            color: #000000; 
-            padding: 10px 12px; 
-            font-family: 'Source Serif 4', serif;
-            font-size: 16px; 
-            text-align: center;
+        .email-image {
+            height: auto !important;
+            margin: 0 auto !important;
+            max-height: 520px !important;
+            max-width: 100% !important;
+            width: auto !important;
         }
-        @media screen and (max-width:632px) {
-            .overlay-text {
-                font-size: 12px;
+
+        @media screen and (max-width: 632px) {
+            .outer-padding {
+                padding: 0 !important;
+            }
+
+            .email-card {
+                border-radius: 0 !important;
+            }
+
+            .content-padding {
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+            }
+
+            .email-title {
+                font-size: 30px !important;
+            }
+
+            .email-image {
+                max-height: 460px !important;
             }
         }
     </style>
 </head>
- 
+
 <body>
-    <main>
-        <a href="{{ form_url }}">
-            <div class="image-container">
-                <div class="overlay-text"><a href="{{ form_url }}">Submit your responses/photos to the next edition of <span style="font-style: italic">Chatime Newsletter</span> before the end of the month!</a></div>
-                <a href="{{ form_url }}"><img src="cid:image" alt="Previous Image"></a>
-            </div>
-        </a>
-    </main>
-    <footer>
-        <p style="text-align:center; font-style: italic;">*Randomly chosen photo</p>
-    </footer>
+    <div style="display:none; font-size:1px; color:#f3eee8; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
+        Submit your responses and photos for the next Chatime Newsletter.
+    </div>
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; background-color:#f3eee8;">
+        <tr>
+            <td class="outer-padding" align="center" style="padding:32px 16px;">
+                <table class="email-card" role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px; background-color:#ffffff; border-radius:14px; overflow:hidden;">
+                    <tr>
+                        <td align="center" bgcolor="#faf5f1" style="border-top:4px solid #133f63; background-color:#faf5f1; text-align:center;">
+                            <a href="{{ form_url }}" target="_blank" style="display:block; text-decoration:none;">
+                                <img class="email-image" src="cid:image" width="600" alt="A randomly chosen photo from Chatime Newsletter" style="display:block; width:auto; max-width:100%; max-height:520px; height:auto; margin:0 auto;">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="content-padding" align="center" style="padding:30px 40px 34px; color:#000000; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif; font-size:16px; line-height:1.5;">
+                            <p style="margin:0 0 8px; color:#133f63; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif; font-size:13px; font-weight:700; letter-spacing:1.5px; line-height:1.4; text-transform:uppercase;">
+                                Monthly reminder
+                            </p>
+                            <h1 class="email-title" style="margin:0; color:#000000; font-family:Georgia, 'Times New Roman', serif; font-size:36px; font-weight:700; line-height:1.2;">
+                                Chatime Newsletter
+                            </h1>
+                            <div style="margin:22px auto; width:48px; border-top:1px solid #eee6de; line-height:1px;">&nbsp;</div>
+                            <p style="margin:0 auto 24px; max-width:460px; color:#000000; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif; font-size:16px; line-height:1.5;">
+                                Submit your responses/photos to the next edition of <em>Chatime Newsletter</em> before the end of the month!
+                            </p>
+
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
+                                <tr>
+                                    <td align="center" bgcolor="#133f63" style="border-radius:8px;">
+                                        <a href="{{ form_url }}" target="_blank" style="display:inline-block; padding:13px 24px; border:1px solid #133f63; border-radius:8px; color:#ffffff; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif; font-size:16px; font-weight:600; line-height:1.25; text-decoration:none;">
+                                            Submit responses &amp; photos&nbsp;&rarr;
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="margin:20px 0 0; color:#6f6a65; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif; font-size:13px; font-style:italic; line-height:1.5;">
+                                Randomly chosen photo
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>
