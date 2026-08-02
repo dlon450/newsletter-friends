@@ -99,8 +99,7 @@
     <table class="answer-card" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:10px;">
         <tr>
             <td class="answer-cell" bgcolor="#faf5f1" style="padding:14px 16px; border-left:3px solid #133f63; border-radius:8px; background-color:#faf5f1; color:#000000; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif;">
-                <p style="margin:0 0 2px; color:#133f63; font-size:15px; font-weight:700; line-height:1.4;">{{ name }}</p>
-                <p style="margin:0; color:#000000; font-size:16px; line-height:1.5;">{{ answer }}</p>
+                <p style="margin:0; color:#000000; font-size:16px; line-height:1.5;"><span class="response-name" style="color:#133f63; font-size:15px; font-weight:700;">{{ name }}</span>: {{ answer }}</p>
             </td>
         </tr>
     </table>
@@ -115,7 +114,7 @@
         </tr>
         <tr>
             <td class="answer-cell photo-caption" bgcolor="#faf5f1" style="padding:13px 16px 15px; border-top:1px solid #eee6de; background-color:#faf5f1; color:#000000; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif;">
-                {% if name %}<p style="margin:0 0 2px; color:#133f63; font-size:15px; font-weight:700; line-height:1.4;">{{ name }}</p>{% endif %}
+                {% if name %}<p class="response-name" style="margin:0 0 2px; color:#133f63; font-size:15px; font-weight:700; line-height:1.4;">{{ name }}</p>{% endif %}
                 {% if caption %}<p style="margin:0; color:#000000; font-size:15px; line-height:1.5;">{% if multiline %}{{ caption | e | replace('\r\n', '\n') | replace('\n\n', '<br><br>' | safe) | replace('\n', '<br>' | safe) }}{% else %}{{ caption }}{% endif %}</p>{% endif %}
             </td>
         </tr>

@@ -201,6 +201,36 @@ class PreviewRenderingTests(unittest.TestCase):
             2,
         )
 
+    def test_question_names_and_responses_share_one_line(self):
+        rendered = self._render_live_templates()
+
+        for variant, document in rendered.items():
+            self.assertRegex(
+                document,
+                r'Question Name A</span>:\s+Question Answer A',
+                msg=variant,
+            )
+            self.assertNotRegex(
+                document,
+                r'Question Name A</p>\s*<p[^>]*>Question Answer A',
+                msg=variant,
+            )
+
+    def test_photo_names_and_captions_use_separate_lines(self):
+        rendered = self._render_live_templates()
+
+        for variant, document in rendered.items():
+            self.assertRegex(
+                document,
+                r'Photo Name A</p>\s*<p[^>]*>Photo Caption A',
+                msg=variant,
+            )
+            self.assertNotRegex(
+                document,
+                r'Photo Name A</span>:\s+Photo Caption A',
+                msg=variant,
+            )
+
     def test_diyl_cids_and_descriptions_are_preserved(self):
         context = self._template_context()
         context["question_mode"] = "diyl_gif"
