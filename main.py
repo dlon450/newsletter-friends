@@ -1,4 +1,4 @@
-from jinja2 import Template
+from jinja2 import Environment
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
@@ -20,6 +20,10 @@ import numpy as np
 import requests
 import smtplib
 import re
+from pathlib import Path
+
+
+BASE_DIR = Path(__file__).resolve().parent
 
 class Newsletter:
 
@@ -41,20 +45,30 @@ class Newsletter:
 
         url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}'.replace(" ", "%20")
         data_df = pd.read_csv(url).replace(np.nan, '')
+        timestamps = pd.to_datetime(
+            data_df["Timestamp"],
+            dayfirst=True,
+            errors="coerce",
+        )
         if frequency_unit == 'month':
-            self.data_df = data_df[pd.to_datetime(data_df["Timestamp"]) >= pd.to_datetime(self.datetime_now - timedelta(days=14)).date().strftime("%Y/%m/%d")]
+            cutoff_date = (self.datetime_now - timedelta(days=14)).date()
         else:
-            self.data_df = data_df[pd.to_datetime(data_df["Timestamp"]) >= pd.to_datetime(self.datetime_now - self.time_delta).date().strftime("%Y/%m/%d")]
+            cutoff_date = (self.datetime_now - self.time_delta).date()
+        self.data_df = data_df[timestamps.dt.date >= cutoff_date]
 
-    def generate_newsletter(self):
+    def generate_newsletter(self, update_edition=True):
         '''
-        Generate newsletter using HTML template and Jinja
-        '''
-        with open('template.html', encoding="utf8") as f:
-            template = Template(f.read())
+        Generate newsletter using HTML templates and Jinja.
 
-        with open('template_spark.html', encoding="utf8") as f:
-            template_spark = Template(f.read())
+        The local preview passes ``update_edition=False`` so rendering shows
+        the next issue number without advancing the persisted counter.
+        '''
+        environment = Environment(autoescape=True)
+        with (BASE_DIR / 'template.html').open(encoding="utf8") as f:
+            template = environment.from_string(f.read())
+
+        with (BASE_DIR / 'template_spark.html').open(encoding="utf8") as f:
+            template_spark = environment.from_string(f.read())
 
         question = self.data_df.iloc[:, 2].to_list()
         names = self.data_df["Your Name"].to_list()
@@ -103,7 +117,7 @@ class Newsletter:
             "images": [[self._drive_direct_url(images[i][j]), names[j], captions[i][j]] for j in range(len(names)) for i in range(len(images)) if images[i][j] != ''],
             "date": self.datetime_now,
             "next_date": self.datetime_now + self.time_delta,
-            "edition_number": edition_number(),
+            "edition_number": edition_number(update_log=update_edition),
             "background_url": self.background_url,
             # "special_images": [],
             # "extra_images": [],
@@ -346,19 +360,22 @@ class Newsletter:
             part.add_header("Content-Disposition", "inline", filename=f"{cid}.gif")
             msg.attach(part)
 
-def edition_number():
+def edition_number(update_log=True):
     '''
-    Return the newsletter edition number 
+    Return the next newsletter edition number.
+
+    Production sends use the default and persist the increment. Local
+    previews pass ``update_log=False`` and never create or modify ``log.txt``.
     '''
-    if not os.path.exists('log.txt'):
-        with open('log.txt','w') as f:
-            f.write('0')
-    with open('log.txt','r') as f:
-        st = int(f.read())
-        st += 1 
-    with open('log.txt','w') as f:
-        f.write(str(st))
-    return st
+    log_path = BASE_DIR / 'log.txt'
+    current_edition = 0
+    if log_path.exists():
+        current_edition = int(log_path.read_text(encoding='utf8').strip())
+
+    next_edition = current_edition + 1
+    if update_log:
+        log_path.write_text(str(next_edition), encoding='utf8')
+    return next_edition
 
 if __name__ == "__main__":
 

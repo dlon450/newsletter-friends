@@ -1,284 +1,253 @@
 <!DOCTYPE html>
-<html>
- 
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Chatime Newsletter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&amp;display=swap" rel="stylesheet">
     <style>
-/* Base styles (email-client friendly) */
-body {
-    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-    font-size: 16px;
-    line-height: 1.5;
-    margin: 0;
-    padding: 0;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-}
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f3eee8;
+            color: #000000;
+            font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.5;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
 
-.container {
-    color: rgb(0, 0, 0);
-    padding-bottom: 50px;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 600px;
-    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-    font-size: 16px;
-}
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
 
-.header {
-    /* background: #faf5f1; */
-    /* background-image: url("cid:image0");
-    margin-top: 50px;
-    height: 400px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;  */
-    text-align: center;
-}
+        img {
+            border: 0;
+            display: block;
+            height: auto;
+            line-height: 100%;
+            max-width: 100%;
+        }
 
-p {
-    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-    font-size: 16px;
-    line-height: 1.5;
-}
+        .email-image {
+            display: block !important;
+            height: auto !important;
+            margin: 0 auto !important;
+            max-width: 100% !important;
+            width: 100% !important;
+        }
 
-h1 {
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', serif;
-    margin-bottom: 0px;
-    font-size: 36px;
-    line-height: 1.2;
-}
+        .answer-cell {
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
 
-h2 {
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', serif;
-    margin-bottom: 0px;
-    font-size: 36px;
-    line-height: 1.2;
-}
+        img.emoji,
+        img.wp-smiley {
+            display: inline !important;
+            height: 1em !important;
+            vertical-align: -0.1em !important;
+            width: 1em !important;
+        }
 
-h3 {
-    font-family: Georgia, 'Times New Roman', serif;
-    margin-top: 30px;
-    margin-bottom: 25px;
-    font-size: 20px;
-    line-height: 1.25;
-}
+        @media screen and (max-width: 632px) {
+            .outer-padding {
+                padding: 0 !important;
+            }
 
-h4 {
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', serif;
-    margin-top: 0px;
-    margin-bottom: 10px;
-    font-size: 18px;
-    line-height: 1.25;
-}
+            .email-card {
+                border-radius: 0 !important;
+            }
 
-.box {
-    padding: 15px;
-    margin-bottom: 10px;
-    font-size: 16px;
-    line-height: 1.5;
-}
+            .header-padding {
+                padding: 25px 22px 26px !important;
+            }
 
-.beige {
-    background: #faf5f1;
-}
+            .main-padding {
+                padding: 2px 20px 30px !important;
+            }
 
-.text-name {
-    color: #133f63;
-}
+            .email-title {
+                font-size: 28px !important;
+            }
 
-/* Default: don't force ALL images to be big/block (prevents giant emoji icons) */
-img {
-  max-width: 100%;
-  height: auto;
-}
+            .section-title {
+                font-size: 19px !important;
+                margin-top: 32px !important;
+            }
 
-/* Only newsletter photos should be full-width block images */
-.news-img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+            .answer-cell {
+                padding: 13px 14px !important;
+            }
 
-/* Extra safety: if a client converts emoji into <img class="emoji"> */
-img.emoji, img.wp-smiley {
-  width: 1em !important;
-  height: 1em !important;
-  display: inline !important;
-  vertical-align: -0.1em !important;
-}
-
-/* Make ONLY the Wrapped title pop */
-.wrapped-title {
-  margin: 34px 0 14px;  /* more breathing room */
-}
-
-.wrapped-badge {
-  display: inline-block;         /* makes it hug the text */
-  padding: 10px 14px;
-  border: 2px solid #133f63;
-  background: #faf5f1;
-  border-radius: 14px;
-
-  color: #133f63;
-  font-weight: 700;
-  font-size: 44px;               /* bigger than your normal h1 */
-  letter-spacing: 0.4px;
-  line-height: 1.15;
-}
-
-/* Mobile tweak */
-@media screen and (max-width:632px) {
-  .wrapped-badge {
-    font-size: 30px;
-    padding: 10px 12px;
-  }
-}
-
-/* If emojis get converted into <img> in some previews/clients, keep them inline-sized */
-.wrapped-badge img {
-  width: 1em !important;
-  height: 1em !important;
-  display: inline !important;
-  vertical-align: -0.1em !important;
-}
-
-
-/* Mobile: keep text readable (don’t shrink to 12px) */
-@media screen and (max-width:632px) {
-    .header {
-        /* height: 275px;
-        margin-top: 0px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center center; */
-        text-align: center;
-    }
-
-    body { font-size: 16px; }
-    p { font-size: 16px; }
-
-    h1 { font-size: 28px; }
-    h2 { font-size: 28px; }
-    h3 { font-size: 18px; }
-    h4 { font-size: 16px; }
-
-    .container { width: 100%; font-size: 16px; }
-    .box { font-size: 16px; }
-}
-</style>
+            .footer-padding {
+                padding: 26px 22px 28px !important;
+            }
+        }
+    </style>
 </head>
- 
+
 <body>
-    <div class="container">
-        <header class="header">
-            <img class="news-img" src="cid:image0" alt="" class="header-img">
-        </header>
-        
-        <h1>Chatime Newsletter</h1>
-        <p style="text-align:center; margin-top: 0px;">Issue No. {{ edition_number }} • {{ date.strftime("%A, %B %d") }}</p>
-    
-        <hr>
-
-        <main>
-
-            <h3>{{ question_title }}</h3>
-            {% if question_mode == "diyl_gif" %}
-            {% for answer in question_answers %}
-                <img class="news-img" src="cid:{{ answer[1] }}" alt="{{ answer[0] }} DIYL">
-                <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[2] | e | replace('\r\n', '\n') | replace('\n\n', '<br><br>') | replace('\n', '<br>') | safe }}</div>
-            {% endfor %}
-            {% else %}
-            {% for answer in question_answers %}
-                <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
-            {% endfor %}
-            {% endif %}
-
-            <h3>✨ Any life updates?</h3>
-            {% for answer in life_updates %}
-                <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
-            {% endfor %}
-
-            <h3>☀️ One Good Thing!</h3>
-            {% for ogt in one_good_thing %}
-                <div class="box beige">
-                    <span class="text-name"><strong>{{ ogt[0] }}</strong></span>: {{ ogt[1] }}
-                </div>
-            {% endfor %}
-
-            <h3>😋 Food spot of the month?</h3>
-            {% for fs in food_spot %}
-                <div class="box beige">
-                    <span class="text-name"><strong>{{ fs[0] }}</strong></span>: {{ fs[1] }}
-                </div>
-            {% endfor %}
-
-            <h3>🤫 Any confessions you would like to make...</h3>
-            {% for c in confessions %}
-                <div class="box beige">
-                    <span class="text-name"><strong>{{ c[0] }}</strong></span>: {{ c[1] }}
-                </div>
-            {% endfor %}
-
-            <h3>📷 Photo Wall</h3>
-            {% for picture in images %}
-                <img class="news-img" src="cid:image{{ loop.index }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
-            {% endfor %}
-
-            <!-- <h1 class="wrapped-title"><span class="wrapped-badge">🎀 2025 Wrapped 🎀</span></h1>
-
-            <hr>
-            
-            <img class="news-img" src="cid:image{{ images|length + 1 }}" alt="{{ special_images[0][2] }}"><div class="box beige"><span class="text-name"><strong></strong></span>{{ special_images[0][2] }}</div>
-
-            {% for question in special_edition_questions[:4] %}
-                <h3>{{ question }}</h3>
-                {% for answer in special_edition_answers[question] %}
-                    <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
-                {% endfor %}
-            {% endfor %}
-
-            <h3>☀️ Outdoor adventures</h3>
-            <img class="news-img" src="cid:image{{ images|length + 2 }}" alt="{{ special_images[1][2] }}"><div class="box beige"><span class="text-name"><strong></strong></span></div>
-            
-            {% for question in special_edition_questions[4:] %}
-                <h3>{{ question }}</h3>
-                {% for answer in special_edition_answers[question] %}
-                    <div class="box beige"><span class="text-name"><strong>{{ answer[0] }}</strong></span>: {{ answer[1] }}</div> 
-                {% endfor %}
-            {% endfor %}
-
-            <h3>🍵 If we had a chatime insta...</h3>
-            
-            <img class="news-img" src="cid:image{{ images|length + 3 }}" alt="{{ special_images[2][2] }}"><div class="box beige"><span class="text-name"><strong></strong></span></div>
-            <img class="news-img" src="cid:image{{ images|length + 4 }}" alt="{{ special_images[3][2] }}"><div class="box beige"><span class="text-name"><strong></strong></span></div>
-            <img class="news-img" src="cid:image{{ images|length + 5 }}" alt="{{ special_images[4][2] }}"><div class="box beige"><span class="text-name"><strong></strong></span></div>
-
-            <h3>📷 Extra Photo Wall</h3>
-            {% for picture in extra_images %}
-                <img class="news-img" src="cid:image{{ images|length + 5 + loop.index }}" alt="{{ picture[2] }}"><div class="box beige"><span class="text-name"><strong>{{ picture[1] }}</strong></span>: {{ picture[2] }}</div> 
-            {% endfor %} -->
-
-        </main>
- 
-        <footer>
-            <br>
-            <p style="text-align:center">The next issue of <span style="font-style: italic">Chatime Newsletter</span> will be delivered on:</p>
-            <h4>{{ next_date.strftime("%A, %B %d") }}</h4>
-            <!-- <br>
-            <p style="text-align:center; margin:24px 0 10px; padding-top:14px; border-top:1px solid #e6ded6; font-size:16px; line-height:1.45; color:#666; font-weight:300; letter-spacing:0.2px;">
-                Thank you everyone for another wonderful year.
-            </p>    -->
-        </footer>
-
+    <div style="display:none; font-size:1px; color:#f3eee8; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all;">
+        Life updates, good things, food finds, and photos from this month.
     </div>
-    <!-- <p style="font-size:100px"></p> -->
+
+    {% macro answer_card(name, answer) -%}
+    <table class="answer-card" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:10px;">
+        <tr>
+            <td class="answer-cell" bgcolor="#faf5f1" style="padding:14px 16px; border-left:3px solid #133f63; border-radius:8px; background-color:#faf5f1; color:#000000; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif;">
+                <p style="margin:0 0 2px; color:#133f63; font-size:15px; font-weight:700; line-height:1.4;">{{ name }}</p>
+                <p style="margin:0; color:#000000; font-size:16px; line-height:1.5;">{{ answer }}</p>
+            </td>
+        </tr>
+    </table>
+    {%- endmacro %}
+
+    {% macro photo_card(src, name, caption, alt_text, multiline=false) -%}
+    <table class="photo-card" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:22px; border:1px solid #eee6de; border-radius:10px; overflow:hidden;">
+        <tr>
+            <td align="center" bgcolor="#faf5f1" style="background-color:#faf5f1; text-align:center;">
+                <img class="email-image" src="{{ src }}" width="530" alt="{{ alt_text }}" style="display:block; width:100%; max-width:100%; height:auto; margin:0 auto;">
+            </td>
+        </tr>
+        <tr>
+            <td class="answer-cell photo-caption" bgcolor="#faf5f1" style="padding:13px 16px 15px; border-top:1px solid #eee6de; background-color:#faf5f1; color:#000000; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif;">
+                {% if name %}<p style="margin:0 0 2px; color:#133f63; font-size:15px; font-weight:700; line-height:1.4;">{{ name }}</p>{% endif %}
+                {% if caption %}<p style="margin:0; color:#000000; font-size:15px; line-height:1.5;">{% if multiline %}{{ caption | e | replace('\r\n', '\n') | replace('\n\n', '<br><br>' | safe) | replace('\n', '<br>' | safe) }}{% else %}{{ caption }}{% endif %}</p>{% endif %}
+            </td>
+        </tr>
+    </table>
+    {%- endmacro %}
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f3eee8" style="width:100%; background-color:#f3eee8;">
+        <tr>
+            <td class="outer-padding" align="center" bgcolor="#f3eee8" style="padding:32px 16px; background-color:#f3eee8;">
+                <table class="email-card" role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="width:100%; max-width:600px; background-color:#ffffff; border-radius:14px; overflow:hidden;">
+                    <tr>
+                        <td align="center" bgcolor="#faf5f1" style="border-top:4px solid #133f63; background-color:#faf5f1; text-align:center;">
+                            <img class="email-image" src="cid:image0" width="600" alt="Chatime Newsletter cover image" style="display:block; width:100%; max-width:600px; height:auto; margin:0 auto;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header-padding" align="center" bgcolor="#ffffff" style="padding:28px 40px 30px; background-color:#ffffff; color:#000000; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif;">
+                            <p style="margin:0 0 8px; color:#133f63; font-size:12px; font-weight:700; letter-spacing:1.6px; line-height:1.4; text-transform:uppercase;">
+                                Monthly catch-up
+                            </p>
+                            <h1 class="email-title" style="margin:0; color:#000000; font-family:Georgia, 'Times New Roman', serif; font-size:36px; font-weight:700; line-height:1.2;">
+                                Chatime Newsletter
+                            </h1>
+                            <p class="issue-meta" style="margin:8px 0 0; color:#6f6a65; font-size:15px; line-height:1.5;">
+                                Issue No. {{ edition_number }}&nbsp;&nbsp;•&nbsp;&nbsp;{{ date.strftime("%A, %B %d") }}
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="main-padding" bgcolor="#ffffff" style="padding:2px 34px 38px; background-color:#ffffff; color:#000000; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif; font-size:16px; line-height:1.5;">
+                            <h2 class="section-title" style="margin:30px 0 14px; padding-bottom:10px; border-bottom:1px solid #eee6de; color:#133f63; font-family:Georgia, 'Times New Roman', serif; font-size:21px; font-weight:700; letter-spacing:0.1px; line-height:1.25;">
+                                {{ question_title }}
+                            </h2>
+
+                            {% if question_mode == "diyl_gif" %}
+                            {% for answer in question_answers %}
+                                {{ photo_card("cid:" ~ answer[1], answer[0], answer[2], answer[0] ~ " DIYL", true) }}
+                            {% endfor %}
+                            {% else %}
+                            {% for answer in question_answers %}
+                                {{ answer_card(answer[0], answer[1]) }}
+                            {% endfor %}
+                            {% endif %}
+
+                            <h2 class="section-title" style="margin:36px 0 14px; padding-bottom:10px; border-bottom:1px solid #eee6de; color:#133f63; font-family:Georgia, 'Times New Roman', serif; font-size:21px; font-weight:700; letter-spacing:0.1px; line-height:1.25;">
+                                ✨ Any life updates?
+                            </h2>
+                            {% for answer in life_updates %}
+                                {{ answer_card(answer[0], answer[1]) }}
+                            {% endfor %}
+
+                            <h2 class="section-title" style="margin:36px 0 14px; padding-bottom:10px; border-bottom:1px solid #eee6de; color:#133f63; font-family:Georgia, 'Times New Roman', serif; font-size:21px; font-weight:700; letter-spacing:0.1px; line-height:1.25;">
+                                ☀️ One Good Thing!
+                            </h2>
+                            {% for answer in one_good_thing %}
+                                {{ answer_card(answer[0], answer[1]) }}
+                            {% endfor %}
+
+                            <h2 class="section-title" style="margin:36px 0 14px; padding-bottom:10px; border-bottom:1px solid #eee6de; color:#133f63; font-family:Georgia, 'Times New Roman', serif; font-size:21px; font-weight:700; letter-spacing:0.1px; line-height:1.25;">
+                                😋 Food spot of the month?
+                            </h2>
+                            {% for answer in food_spot %}
+                                {{ answer_card(answer[0], answer[1]) }}
+                            {% endfor %}
+
+                            <h2 class="section-title" style="margin:36px 0 14px; padding-bottom:10px; border-bottom:1px solid #eee6de; color:#133f63; font-family:Georgia, 'Times New Roman', serif; font-size:21px; font-weight:700; letter-spacing:0.1px; line-height:1.25;">
+                                🤫 Any confessions you would like to make...
+                            </h2>
+                            {% for answer in confessions %}
+                                {{ answer_card(answer[0], answer[1]) }}
+                            {% endfor %}
+
+                            <h2 class="section-title" style="margin:36px 0 14px; padding-bottom:10px; border-bottom:1px solid #eee6de; color:#133f63; font-family:Georgia, 'Times New Roman', serif; font-size:21px; font-weight:700; letter-spacing:0.1px; line-height:1.25;">
+                                📷 Photo Wall
+                            </h2>
+                            {% for picture in images %}
+                                {{ photo_card("cid:image" ~ loop.index, picture[1], picture[2], picture[2]) }}
+                            {% endfor %}
+
+                            {#
+                            Inactive 2025 Wrapped content, preserved for a future
+                            special edition without including it in normal emails.
+
+                            <h1 class="wrapped-title"><span class="wrapped-badge">🎀 2025 Wrapped 🎀</span></h1>
+                            <img class="email-image" src="cid:image{{ images|length + 1 }}" alt="{{ special_images[0][2] }}">
+
+                            {% for question in special_edition_questions[:4] %}
+                                <h2 class="section-title">{{ question }}</h2>
+                                {% for answer in special_edition_answers[question] %}
+                                    {{ answer_card(answer[0], answer[1]) }}
+                                {% endfor %}
+                            {% endfor %}
+
+                            <h2 class="section-title">☀️ Outdoor adventures</h2>
+                            <img class="email-image" src="cid:image{{ images|length + 2 }}" alt="{{ special_images[1][2] }}">
+
+                            {% for question in special_edition_questions[4:] %}
+                                <h2 class="section-title">{{ question }}</h2>
+                                {% for answer in special_edition_answers[question] %}
+                                    {{ answer_card(answer[0], answer[1]) }}
+                                {% endfor %}
+                            {% endfor %}
+
+                            <h2 class="section-title">🍵 If we had a chatime insta...</h2>
+                            <img class="email-image" src="cid:image{{ images|length + 3 }}" alt="{{ special_images[2][2] }}">
+                            <img class="email-image" src="cid:image{{ images|length + 4 }}" alt="{{ special_images[3][2] }}">
+                            <img class="email-image" src="cid:image{{ images|length + 5 }}" alt="{{ special_images[4][2] }}">
+
+                            <h2 class="section-title">📷 Extra Photo Wall</h2>
+                            {% for picture in extra_images %}
+                                {{ photo_card("cid:image" ~ (images|length + 5 + loop.index), picture[1], picture[2], picture[2]) }}
+                            {% endfor %}
+                            #}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="footer-padding" align="center" bgcolor="#faf5f1" style="padding:28px 36px 30px; border-top:1px solid #eee6de; background-color:#faf5f1; color:#000000; font-family:'Source Serif 4', Georgia, 'Times New Roman', serif; text-align:center;">
+                            <p style="margin:0 0 6px; color:#133f63; font-size:12px; font-weight:700; letter-spacing:1.4px; line-height:1.4; text-transform:uppercase;">
+                                Next issue
+                            </p>
+                            <p class="next-date" style="margin:0; color:#000000; font-family:Georgia, 'Times New Roman', serif; font-size:20px; font-weight:700; line-height:1.35;">
+                                {{ next_date.strftime("%A, %B %d") }}
+                            </p>
+                            <p style="margin:12px 0 0; color:#6f6a65; font-size:14px; font-style:italic; line-height:1.5;">
+                                See you next month&nbsp;🍵
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 
- 
 </html>

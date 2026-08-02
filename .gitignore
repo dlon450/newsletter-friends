@@ -2,3 +2,5 @@
 .vscode/
 data/
 log.txt
+__pycache__/
+*.py[cod]

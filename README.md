@@ -17,7 +17,28 @@ BACKGROUND_URL=xxxxxxxxxxxxxxxx
 FORM_URL=xxxxxxxxxxxxxxxx
 ```
 
-Then, run ``main.py``. Otherwise, if using this repo with GitHub Actions, you will need to add these hidden variables as secrets (Settings > Secrets and Variables > Actions > New repository secret).
+## Preview Locally Without Sending
+
+To load the current Google Sheet responses and view the rendered newsletter in a browser without emailing anyone, run:
+
+```bash
+python preview.py
+```
+
+Then open [http://127.0.0.1:8000](http://127.0.0.1:8000). The preview offers both the standard and Spark/Outlook variants plus a **Reload live data** button.
+
+Preview mode:
+
+* binds only to your computer (`127.0.0.1`)
+* reads `SHEET_ID`, `SHEET_NAME`, and `BACKGROUND_URL` from `.env`
+* displays Google Drive photos through the loopback-only preview server
+* does not read email credentials or recipient lists
+* cannot send email
+* shows the next edition number without changing `log.txt`
+
+Press `Ctrl+C` in the terminal to stop the server. You can choose another local port with `python preview.py --port 8080`.
+
+Running `main.py` is the production action: it advances the edition counter and sends the newsletter. Otherwise, if using this repo with GitHub Actions, you will need to add these hidden variables as secrets (Settings > Secrets and Variables > Actions > New repository secret).
 
 ## Built With
 * Jinja2
