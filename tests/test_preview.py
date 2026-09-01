@@ -265,6 +265,26 @@ class PreviewRenderingTests(unittest.TestCase):
             self.assertNotIn("max-height: 560px", source)
             self.assertNotIn("max-height: 500px", source)
 
+    def test_global_image_rule_does_not_force_gmail_emoji_onto_new_lines(self):
+        for filename in (
+            "template.html",
+            "template_spark.html",
+            "reminder.html",
+        ):
+            source = (preview.BASE_DIR / filename).read_text(encoding="utf8")
+            global_image_rule = re.search(
+                r"(?m)^\s*img\s*\{(?P<body>.*?)^\s*\}",
+                source,
+                flags=re.DOTALL,
+            )
+
+            self.assertIsNotNone(global_image_rule, msg=filename)
+            declarations = global_image_rule.group("body")
+            self.assertNotIn("display: block", declarations, msg=filename)
+            self.assertNotIn("height: auto", declarations, msg=filename)
+            self.assertIn("display: block !important", source, msg=filename)
+            self.assertIn("height: auto !important", source, msg=filename)
+
     def test_email_cids_are_replaced_for_browser(self):
         newsletter = SimpleNamespace(
             background_url="https://example.test/cover.jpg",
