@@ -43,4 +43,4 @@ Running `main.py` is the production action: it advances the edition counter and 
 ## Built With
 * Jinja2
 * Pandas
-* Python 3.8
+* Python 3.12
